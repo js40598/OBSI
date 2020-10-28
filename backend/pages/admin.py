@@ -24,7 +24,7 @@ class ReservationAdmin(admin.ModelAdmin):
     list_per_page = 8
     list_editable = ('date', 'time')
     list_filter = ('user', 'date', 'is_upcoming')
-    readonly_fields = ('datetime_begin', 'slug')
+    readonly_fields = ('datetime_begin', 'slug', 'is_upcoming')
 
 
 class MessageAdmin(admin.ModelAdmin):

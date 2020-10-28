@@ -8,7 +8,6 @@ def update_reservation_status():
     res = Reservation.objects.all().filter(is_upcoming=True)
     utc = pytz.UTC
     for reservation in res:
-        print(str(reservation.datetime_begin))
         if reservation.datetime_begin < utc.localize(datetime.now()):
             reservation.is_upcoming = False
             reservation.save()

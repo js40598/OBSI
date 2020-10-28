@@ -24,11 +24,21 @@ class Room(models.Model):
     sign = models.CharField(max_length=100)
     availability_level = models.PositiveIntegerField()
     projector = models.BooleanField()
+    multimedia_board = models.BooleanField()
+    blackboard = models.BooleanField()
     number_of_places = models.PositiveIntegerField()
+    number_of_computers = models.PositiveIntegerField()
     destination = models.CharField(max_length=20, choices=DESTINATION_CHOICES)
 
     def __str__(self):
         return self.sign
+
+
+class AdditionalEquipment(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    amount = models.PositiveIntegerField()
 
 
 class Reservation(models.Model):
