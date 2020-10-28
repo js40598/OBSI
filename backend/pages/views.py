@@ -5,8 +5,8 @@ from django.contrib.auth.models import User, Group
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from pages.tasks import update_reservation_status
-from pages.models import Floor, Room
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -56,3 +56,13 @@ def loginuser(request):
         else:
             login(request, user)
             return redirect('home')
+
+
+
+@login_required
+def logoutuser(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')
+    else:
+        return redirect('home')
