@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-#from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from backend.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from django.db import IntegrityError
@@ -13,9 +13,7 @@ from django.db import transaction
 
 def home(request):
     update_reservation_status()
-    return render(request, 'pages/index.html')
-
-
+    return render(request, 'pages/index.html', {'user': request.user})
 
 
 def signupuser(request):
@@ -46,3 +44,15 @@ def signupuser(request):
         else:
             return render(request, 'pages/signupuser.html', {'form': UserCreationForm(),
                                                              'error': "Passwords didn't match"})
+
+
+def loginuser(request):
+    if request.method == 'GET':
+        return render(request, 'pages/loginuser.html', {'form': AuthenticationForm()})
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'pages/loginuser.html', {'form': AuthenticationForm()})
+        else:
+            login(request, user)
+            return redirect('home')
