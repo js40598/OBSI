@@ -2,6 +2,14 @@
 
 {% block content %}
 
-    reservation_year
+            {% if paged_year.has_other_pages %}
+              {% for i in paginator_years %}
+                  {% if i == year %}
+                      <a>{{ i }}</a>
+                  {% else %}
+                      <a href="?year={{ i }}">{{ i }}</a>
+                  {% endif %}
+              {% endfor %}
+            {% endif %}
 
 {% endblock %}
