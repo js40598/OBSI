@@ -1,4 +1,4 @@
-from pages.models import Reservation
+from reservation.models import Reservation
 import threading
 from datetime import datetime
 import pytz

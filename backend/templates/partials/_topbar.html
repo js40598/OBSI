@@ -2,7 +2,10 @@
     Logged in as {{ user.username }}
 <br>
     <a href="{% url 'home' %}">Home</a>
-    <form action="{% url 'logoutuser' %}" method="POST" style="width: 100px;">
+    <!---
+    <a href="{% url 'reservation_year' '2020' %}">Calendar</a>
+    --->
+    <form action="{% url 'logoutuser' %}" method="POST" style="width: 100px; display: inline">
 
         {% csrf_token %}
         <button type="submit">Logout</button>
