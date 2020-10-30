@@ -34,4 +34,7 @@ def reservation_year(request, curr_year):
 
 @login_required
 def reservation_day(request, year, month, day):
-    return render(request, 'reservation/day.html')
+    context = {
+        'current_year': datetime.now().year,
+    }
+    return render(request, 'reservation/day.html', context)
