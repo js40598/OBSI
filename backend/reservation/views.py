@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from calendar import month_name
 from calendar import Calendar
 from datetime import datetime
 
 
 @login_required
-def reservation_year(request):
+def reservation_year(request, curr_year):
     # Pagination
     current_year = datetime.now().year
     paginator_years = [current_year-1, current_year, current_year+1]
@@ -17,8 +18,9 @@ def reservation_year(request):
     paged_year = paginator.get_page(year)
 
     # Display
-    calendar = [[Calendar().itermonthdays4(current_year, i), i] for i in range(1, 13)]
+    calendar = [[Calendar().itermonthdays4(curr_year, i), i, month_name[i]] for i in range(1, 13)]
     context = {
+        'curr_year': curr_year,
         'dates': Calendar(),
         'current_year': current_year,
         'paged_year': paged_year,

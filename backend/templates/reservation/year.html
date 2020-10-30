@@ -4,10 +4,10 @@
 
             {% if paged_year.has_other_pages %}
               {% for i in paginator_years %}
-                  {% if i == year %}
+                  {% if i == curr_year %}
                       <a>{{ i }}</a>
                   {% else %}
-                      <a href="?year={{ i }}">{{ i }}</a>
+                      <a href="{{ i }}">{{ i }}</a>
                   {% endif %}
               {% endfor %}
             {% endif %}
@@ -17,6 +17,10 @@
     
     {% for month in calendar %}
         <div style="width: 320px; display: inline-block; margin-right: 200px; margin-bottom: 40px">
+
+            {{ month.2 }}
+            <br>
+
             {% for day in month.0 %}
                 {% if day.1 == month.1 %}
                     <div style="width: 30px; display: inline-block; margin-right: 10px">
