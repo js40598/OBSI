@@ -34,7 +34,14 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="#">Communicator</a>
+                    {% for reservation in reservations %}
+                        {% if reservation %}
+                            {% if reservation.time.0 == time_choice.0 %}
+                                <a href="{% url 'communicator' reservation.year_slug reservation.month_slug reservation.day_slug reservation.time.0 %}">Communicator</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
                 </td>
             </tr>
         {% endfor %}
