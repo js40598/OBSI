@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name
 from calendar import Calendar
 from datetime import datetime
+from reservation.models import Reservation
 
 
 @login_required
@@ -34,7 +36,15 @@ def reservation_year(request, curr_year):
 
 @login_required
 def reservation_day(request, year, month, day):
+    reservations = []
+    for i in range(1, len(Reservation.TIME_CHOICES)+1):
+        try:
+            reservations += [Reservation.objects.get(year_slug=year, month_slug=month, day_slug=day, time=i)]
+        except ObjectDoesNotExist:
+            reservations += [None]
     context = {
+        'reservations': reservations,
+        'time_choices': Reservation.TIME_CHOICES,
         'current_year': datetime.now().year,
     }
     return render(request, 'reservation/day.html', context)

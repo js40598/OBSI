@@ -1,5 +1,44 @@
 {% include 'base.html' %}
 
 {% block content %}
+    <table>
+        <tr>
+            <th>
+                Block
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+                Reserved by
+            </th>
+            <th>
+            </th>
+        </tr>
 
+        {% for time_choice in time_choices %}
+            <tr>
+                <td>
+                    {{ time_choice.0 }}
+                </td>
+                <td>
+                    {{ time_choice.1 }}
+                </td>
+                <td>
+                    {% for reservation in reservations %}
+                        {% if reservation %}
+                            {% if reservation.time.0 == time_choice.0 %}
+                                {{ reservation.user.username }}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="#">Communicator</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+    
 {% endblock %}

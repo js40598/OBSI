@@ -3,6 +3,9 @@ from datetime import datetime
 
 def reservation_slug_generator(sender, instance, *args, **kwargs):
     instance.slug = '{}_{}_{}'.format(instance.room.sign, str(instance.date), str(instance.time))
+    instance.year_slug = '{}'.format(instance.date.year)
+    instance.month_slug = '{}'.format(instance.date.month)
+    instance.day_slug = '{}'.format(instance.date.day)
 
 
 def reservation_datetime_generator(sender, instance, *args, **kwargs):
