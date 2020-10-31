@@ -13,6 +13,7 @@ class RoomAdmin(admin.ModelAdmin):
     list_per_page = 50
     list_editable = ('destination', 'number_of_places', 'availability_level')
     list_filter = ('destination', 'floor')
+    readonly_fields = ('room_slug', )
 
 
 class AdditionalEquipmentAdmin(admin.ModelAdmin):
