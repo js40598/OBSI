@@ -34,7 +34,10 @@
     </form>
 
     {% for room in rooms %}
-        {{ room.room_slug }}
+        <a href="{% url 'reservation_year' room.room_slug current_year %}">
+            {{ room.room_slug }}
+        </a>
+        <br>
     {% endfor %}
 
 {% endblock %}

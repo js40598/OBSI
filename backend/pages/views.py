@@ -45,6 +45,7 @@ def search(request):
                 rooms = rooms.filter(blackboard=True)
     print(len(rooms))
     context = {
+        'current_year': datetime.now().year,
         'rooms': rooms,
         'destination_choices': Room.DESTINATION_CHOICES,
         'floor_choices': floor_choices
