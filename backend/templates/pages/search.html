@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="sign">Room sign</label><br>
+        <input type="text" name="sign" placeholder="Room sign"><br><br>
+        <label for="places">Number of places</label><br>
+        <input type="number" name="places"><br><br>
+        <label for="computers">Number of computers</label><br>
+        <input type="number" name="computers"><br><br>
+        <label for="floor">Floor</label><br>
+        <select name="floor">
+            <option selected></option>
+            {% for floor_choice in floor_choices %}
+                <option value="floor_choice">{{ floor_choice }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="destination">Destination</label><br>
+        <select name="destination">
+            <option selected></option>
+            {% for key, value in destination_choices %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="projector">Projector</label><br>
+        <input type="checkbox" name="projector" value="projector" id="projector"><br><br>
+        <label for="multimedia_board">Multimedia board</label><br>
+        <input type="checkbox" name="multimedia_board" value="multimedia_board"><br><br>
+        <label for="blackboard">Blackboard</label><br>
+        <input type="checkbox" name="blackboard" value="blackboard"><br><br>
+        <br>
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}
