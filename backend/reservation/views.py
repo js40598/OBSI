@@ -54,7 +54,6 @@ def reservation_day(request, room_slug, year, month, day):
         if 'create_reservation' in request.POST:
             try:
                 Reservation.objects.get(user=request.user,
-                                        room__room_slug=room_slug,
                                         year_slug=year,
                                         month_slug=month,
                                         day_slug=day,
