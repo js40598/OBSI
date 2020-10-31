@@ -45,8 +45,17 @@ def reservation_day(request, room_slug, year, month, day):
     for i in range(1, len(Reservation.TIME_CHOICES)+1):
         try:
             reservations += [[True,
-                              Reservation.objects.get(room__room_slug=room_slug, year_slug=year, month_slug=month, day_slug=day, time=i),
-                              time_choices[i-1]
+                              Reservation.objects.get(room__room_slug=room_slug,
+                                                      year_slug=year,
+                                                      month_slug=month,
+                                                      day_slug=day,
+                                                      time=i),
+                              time_choices[i-1],
+                              Reservation.objects.get(room__room_slug=room_slug,
+                                                      year_slug=year,
+                                                      month_slug=month,
+                                                      day_slug=day,
+                                                      time=i).user.groups.get().name
                               ]]
         except ObjectDoesNotExist:
             reservations += [[False, time_choices[i-1]]]
@@ -74,7 +83,20 @@ def reservation_day(request, room_slug, year, month, day):
                                                          time=request.POST['time'])
             remove_reservation.delete()
             return redirect('reservation_day', room_slug, year, month, day)
+        elif 'force_reservation' in request.POST:
+            try:
+                Reservation.objects.get(user=request.user,
+                                        year_slug=year,
+                                        month_slug=month,
+                                        day_slug=day,
+                                        time=request.POST['time'])
+            except ObjectDoesNotExist:
+                forced_reservation = Reservation.objects.get(reservation_slug=request.POST['force_reservation'])
+                forced_reservation.user = request.user
+                forced_reservation.save()
+                return redirect('reservation_day', room_slug, year, month, day)
     context = {
+        'user_group': request.user.groups.get().name,
         'room_slug': room_slug,
         'reservations': reservations,
         'time_choices': time_choices,

@@ -32,4 +32,9 @@
         <br>
         <button type="submit">Search</button>
     </form>
+
+    {% for room in rooms %}
+        {{ room.room_slug }}
+    {% endfor %}
+
 {% endblock %}

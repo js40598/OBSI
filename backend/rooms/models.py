@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from rooms.utils import room_slug_generator
 
 
 class Floor(models.Model):
@@ -34,3 +36,6 @@ class AdditionalEquipment(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     amount = models.PositiveIntegerField()
+
+
+pre_save.connect(room_slug_generator, sender=Room)

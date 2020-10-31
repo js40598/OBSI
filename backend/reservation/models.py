@@ -28,7 +28,7 @@ class Reservation(models.Model):
     is_upcoming = models.BooleanField()
 
     def __str__(self):
-        return self.slug
+        return self.reservation_slug
 
 
 pre_save.connect(reservation_slug_generator, sender=Reservation)
