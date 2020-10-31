@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name
 from calendar import Calendar
-from datetime import datetime
+from datetime import date, datetime
 from reservation.models import Reservation
+from rooms.models import Room
 
 
 @login_required
@@ -36,15 +38,42 @@ def reservation_year(request, curr_year):
 
 @login_required
 def reservation_day(request, year, month, day):
+    time_choices = Reservation.TIME_CHOICES
     reservations = []
     for i in range(1, len(Reservation.TIME_CHOICES)+1):
         try:
-            reservations += [Reservation.objects.get(year_slug=year, month_slug=month, day_slug=day, time=i)]
+            reservations += [[True,
+                              Reservation.objects.get(year_slug=year, month_slug=month, day_slug=day, time=i),
+                              time_choices[i-1]
+                              ]]
         except ObjectDoesNotExist:
-            reservations += [None]
+            reservations += [[False, time_choices[i-1]]]
+    if request.method == 'POST':
+        if 'create_reservation' in request.POST:
+            try:
+                Reservation.objects.get(user=request.user,
+                                        year_slug=year,
+                                        month_slug=month,
+                                        day_slug=day,
+                                        time=request.POST['time'])
+            except ObjectDoesNotExist:
+                new_reservation = Reservation(user=request.user,
+                                              room=Room.objects.get(sign=100),
+                                              date=date(year, month, day),
+                                              time=request.POST['time'])
+                new_reservation.save()
+                return redirect('reservation_day', year, month, day)
+        elif 'remove_reservation' in request.POST:
+            remove_reservation = Reservation.objects.get(user=request.user,
+                                                         year_slug=year,
+                                                         month_slug=month,
+                                                         day_slug=day,
+                                                         time=request.POST['time'])
+            remove_reservation.delete()
+            return redirect('reservation_day', year, month, day)
     context = {
         'reservations': reservations,
-        'time_choices': Reservation.TIME_CHOICES,
+        'time_choices': time_choices,
         'current_year': datetime.now().year,
     }
     return render(request, 'reservation/day.html', context)

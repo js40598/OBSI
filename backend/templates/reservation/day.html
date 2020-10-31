@@ -1,5 +1,4 @@
 {% include 'base.html' %}
-
 {% block content %}
     <table>
         <tr>
@@ -15,36 +14,52 @@
             <th>
             </th>
         </tr>
-
-        {% for time_choice in time_choices %}
+        {% for reservation in reservations %}
             <tr>
-                <td>
-                    {{ time_choice.0 }}
-                </td>
-                <td>
-                    {{ time_choice.1 }}
-                </td>
-                <td>
-                    {% for reservation in reservations %}
-                        {% if reservation %}
-                            {% if reservation.time.0 == time_choice.0 %}
-                                {{ reservation.user.username }}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for reservation in reservations %}
-                        {% if reservation %}
-                            {% if reservation.time.0 == time_choice.0 %}
-                                <a href="{% url 'communicator' reservation.year_slug reservation.month_slug reservation.day_slug reservation.time.0 %}">Communicator</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-
-                </td>
+                {% if reservation.0 %}
+                    <td>
+                        {{ reservation.2.0 }}
+                    </td>
+                    <td>
+                        {{ reservation.2.1 }}
+                    </td>
+                    <td>
+                        {{ reservation.1.user.username }}
+                    </td>
+                    <td>
+                        <a href="{% url 'communicator' reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 %}">Communicator</a>
+                    </td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                            <input type="hidden" name="user" value="{{ request.user }}">
+                            <input type="hidden" name="remove_reservation" value="{{ reservation.1.0 }}">
+                            <button type="submit">Remove reservation</button>
+                        </form>
+                    </td>
+                {% else %}
+                    <td>
+                        {{ reservation.1.0 }}
+                    </td>
+                    <td>
+                        {{ reservation.1.1 }}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="create_reservation">
+                            <input type="hidden" name="time" value="{{ reservation.1.0 }}">
+                            <button type="submit">Reserve</button>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
+
         {% endfor %}
+
 
     </table>
     
