@@ -16,6 +16,7 @@ class Room(models.Model):
     ]
     floor = models.ForeignKey(Floor, on_delete=models.DO_NOTHING)
     sign = models.CharField(max_length=100)
+    room_slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
     availability_level = models.PositiveIntegerField()
     projector = models.BooleanField()
     multimedia_board = models.BooleanField()

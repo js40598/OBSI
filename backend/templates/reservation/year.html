@@ -24,7 +24,7 @@
             {% for day in month.0 %}
                 {% if day.1 == month.1 %}
                     <div style="width: 30px; display: inline-block; margin-right: 10px">
-                        <a href="{% url 'reservation_day' year month.1 day.2 %}">
+                        <a href="{% url 'reservation_day' room_slug year month.1 day.2 %}">
                             {{ day.2 }}
                         </a>
                     </div>

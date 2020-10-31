@@ -18,7 +18,7 @@ class Reservation(models.Model):
     ]
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING)
-    slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
+    reservation_slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
     year_slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
     month_slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
     day_slug = models.SlugField(max_length=100, null=True, blank=True, default=None)

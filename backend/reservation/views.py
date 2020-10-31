@@ -11,7 +11,7 @@ from rooms.models import Room
 
 
 @login_required
-def reservation_year(request, curr_year):
+def reservation_year(request, room_slug, curr_year):
     # Pagination
     current_year = datetime.now().year
     paginator_years = [current_year-1, current_year, current_year+1]
@@ -24,6 +24,7 @@ def reservation_year(request, curr_year):
     # Display
     calendar = [[Calendar().itermonthdays4(curr_year, i), i, month_name[i]] for i in range(1, 13)]
     context = {
+        'room_slug': room_slug,
         'curr_year': curr_year,
         'dates': Calendar(),
         'current_year': current_year,
@@ -37,13 +38,14 @@ def reservation_year(request, curr_year):
 
 
 @login_required
-def reservation_day(request, year, month, day):
+def reservation_day(request, room_slug, year, month, day):
+    room_slug = room_slug
     time_choices = Reservation.TIME_CHOICES
     reservations = []
     for i in range(1, len(Reservation.TIME_CHOICES)+1):
         try:
             reservations += [[True,
-                              Reservation.objects.get(year_slug=year, month_slug=month, day_slug=day, time=i),
+                              Reservation.objects.get(room__room_slug=room_slug, year_slug=year, month_slug=month, day_slug=day, time=i),
                               time_choices[i-1]
                               ]]
         except ObjectDoesNotExist:
@@ -52,26 +54,29 @@ def reservation_day(request, year, month, day):
         if 'create_reservation' in request.POST:
             try:
                 Reservation.objects.get(user=request.user,
+                                        room__room_slug=room_slug,
                                         year_slug=year,
                                         month_slug=month,
                                         day_slug=day,
                                         time=request.POST['time'])
             except ObjectDoesNotExist:
                 new_reservation = Reservation(user=request.user,
-                                              room=Room.objects.get(sign=100),
+                                              room=Room.objects.get(room_slug=room_slug),
                                               date=date(year, month, day),
                                               time=request.POST['time'])
                 new_reservation.save()
-                return redirect('reservation_day', year, month, day)
+                return redirect('reservation_day', room_slug, year, month, day)
         elif 'remove_reservation' in request.POST:
             remove_reservation = Reservation.objects.get(user=request.user,
+                                                         room__room_slug=room_slug,
                                                          year_slug=year,
                                                          month_slug=month,
                                                          day_slug=day,
                                                          time=request.POST['time'])
             remove_reservation.delete()
-            return redirect('reservation_day', year, month, day)
+            return redirect('reservation_day', room_slug, year, month, day)
     context = {
+        'room_slug': room_slug,
         'reservations': reservations,
         'time_choices': time_choices,
         'current_year': datetime.now().year,
