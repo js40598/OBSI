@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Sign Up</h1>
+<h1>Create User</h1>
 
 <h2>{{ error }}</h2>
 
@@ -24,8 +24,8 @@
         {{ form.last_name }}
     </p>
     <p>
-        {{ form.groups.label }}
-        {{ form.groups }}
+        <label for="is_lecturer">Is lecturer</label><br>
+        <input type="checkbox" name="is_lecturer" value="is_lecturer">
     </p>
     <p>
         {{ form.password1.label }}

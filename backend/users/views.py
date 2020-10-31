@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from backend.forms import UserCreationForm
+from users.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
@@ -8,9 +8,12 @@ from django.db import transaction
 from django.contrib.auth.decorators import login_required
 
 
-def signupuser(request):
+@login_required
+def createuser(request):
+    if not request.user.is_staff:
+        return redirect('home')
     if request.method == 'GET':
-        return render(request, 'users/signupuser.html', {'form': UserCreationForm()})
+        return render(request, 'users/createuser.html', {'form': UserCreationForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
@@ -21,24 +24,24 @@ def signupuser(request):
                         email=request.POST['email'],
                         first_name=request.POST['first_name'],
                         last_name=request.POST['first_name'],
-
                     )
-                    group = Group.objects.get(id=request.POST['groups'])
+                    if 'is_lecturer' in request.POST:
+                        group = Group.objects.get(name='Lecturer')
+                    else:
+                        group = Group.objects.get(name='Student')
                     group.user_set.add(user)
                     user.save()
-                    if group.name == 'Staff':
-                        user.is_staff = True
-                        user.save()
                     return redirect('home')
             except IntegrityError:
-                return render(request, 'users/signupuser.html', {'form': UserCreationForm(),
+                return render(request, 'users/createuser.html', {'form': UserCreationForm(),
                                                                  'error': "The username has already been taken"})
         else:
-            return render(request, 'users/signupuser.html', {'form': UserCreationForm(),
+            return render(request, 'users/createuser.html', {'form': UserCreationForm(),
                                                              'error': "Passwords didn't match"})
 
 
 def loginuser(request):
+    logout(request)
     if request.method == 'GET':
         return render(request, 'users/loginuser.html', {'form': AuthenticationForm()})
     else:
