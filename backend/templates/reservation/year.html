@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+            {% if paged_year.has_other_pages %}
+              {% for i in paginator_years %}
+                  {% if i == curr_year %}
+                      <a>{{ i }}</a>
+                  {% else %}
+                      <a href="{{ i }}">{{ i }}</a>
+                  {% endif %}
+              {% endfor %}
+            {% endif %}
+    <br>
+    <br>
+
+    
+    {% for month in calendar %}
+        <div style="width: 320px; display: inline-block; margin-right: 200px; margin-bottom: 40px">
+
+            {{ month.2 }}
+            <br>
+
+            {% for day in month.0 %}
+                {% if day.1 == month.1 %}
+                    <div style="width: 30px; display: inline-block; margin-right: 10px">
+                        <a href="{% url 'reservation_day' room_slug year month.1 day.2 %}">
+                            {{ day.2 }}
+                        </a>
+                    </div>
+                {% else %}
+                    <div style="width: 30px; display: inline-block; margin-right: 10px; color: lightgrey">
+                        {{ day.2 }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+{% endblock %}

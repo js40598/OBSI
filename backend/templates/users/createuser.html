@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Create User</h1>
+
+<h2>{{ error }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>
+        {{ form.email.label }}
+        {{ form.email }}
+    </p>
+    <p>
+        {{ form.username.label }}
+        {{ form.username }}
+    </p>
+    <p>
+        {{ form.first_name.label }}
+        {{ form.first_name }}
+    </p>
+    <p>
+        {{ form.last_name.label }}
+        {{ form.last_name }}
+    </p>
+    <p>
+        <label for="is_lecturer">Is lecturer</label><br>
+        <input type="checkbox" name="is_lecturer" value="is_lecturer">
+    </p>
+    <p>
+        {{ form.password1.label }}
+        {{ form.password1 }}
+    </p>
+    <p>
+        {{ form.password2.label }}
+        {{ form.password2 }}
+    </p>
+    <button type="submit">Sign Up</button>
+</form>
+{% endblock %}
