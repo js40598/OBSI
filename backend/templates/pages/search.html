@@ -13,7 +13,7 @@
         <select name="floor">
             <option selected></option>
             {% for floor_choice in floor_choices %}
-                <option value="floor_choice">{{ floor_choice }}</option>
+                <option value="{{ floor_choice }}">{{ floor_choice }}</option>
             {% endfor %}
         </select><br><br>
         <label for="destination">Destination</label><br>
