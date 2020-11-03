@@ -25,7 +25,7 @@
                     </td>
                     <td>
                         {{ reservation.1.user.username }}
-                    </td>
+                    </td><!--
                     <td>
                         <a href="{% url 'communicator' room_slug reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 %}">Communicator</a>
                     </td>
@@ -82,7 +82,7 @@
                         {% else %}
                             <button disabled>Force reservation</button>
                         {% endif %}
-                    </td>
+                    </td> -->
                 {% else %}
                     <td>
                         {{ reservation.1.0 }}
@@ -91,7 +91,7 @@
                         {{ reservation.1.1 }}
                     </td>
                     <td>
-                    </td>
+                    </td><!--
                     <td>
                         <form method="POST">
                             {% csrf_token %}
@@ -99,7 +99,7 @@
                             <input type="hidden" name="time" value="{{ reservation.1.0 }}">
                             <button type="submit">Reserve</button>
                         </form>
-                    </td>
+                    </td> -->
                 {% endif %}
             </tr>
 
