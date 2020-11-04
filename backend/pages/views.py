@@ -43,7 +43,6 @@ def search(request):
         if 'blackboard' in request.POST:
             if request.POST['blackboard']:
                 rooms = rooms.filter(blackboard=True)
-    print(len(rooms))
     context = {
         'current_year': datetime.now().year,
         'rooms': rooms,

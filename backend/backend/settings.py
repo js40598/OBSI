@@ -26,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['obsi-room-reservation.herokuapp.com']
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -129,6 +130,10 @@ STATIC_URL = '/static/'
 
 
 ASGI_APPLICATION = "backend.asgi.application"
+
+
+import django_heroku
+django_heroku.settings(locals())
 
 
 try:
