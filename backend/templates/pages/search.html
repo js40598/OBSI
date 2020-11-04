@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+    <h1>Search room</h1>
+
     <form method="POST">
         {% csrf_token %}
         <label for="sign">Room sign</label><br>

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from reservation.tasks import update_reservation_status
 from datetime import datetime
@@ -15,6 +16,7 @@ def home(request):
     return render(request, 'pages/index.html', context)
 
 
+@login_required
 def search(request):
     floor_choices = [floor.level for floor in Floor.objects.all().order_by('-level')]
     rooms = Room.objects.all()
