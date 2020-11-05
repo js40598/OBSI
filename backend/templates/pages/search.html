@@ -8,6 +8,16 @@
         {% csrf_token %}
         <label for="sign">Room sign</label><br>
         <input type="text" name="sign" placeholder="Room sign"><br><br>
+        <label for="date">Date</label><br>
+        <input type="date" name="date"><br><br>
+        <label for="time">Time</label><br>
+        <select name="time">
+            <option selected></option>
+            {% for key, value in time_choices %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select><br>
+        {{ error }}<br>
         <label for="places">Number of places</label><br>
         <input type="number" name="places"><br><br>
         <label for="computers">Number of computers</label><br>
@@ -36,11 +46,20 @@
         <button type="submit">Search</button>
     </form>
 
-    {% for room in rooms %}
-        <a href="{% url 'reservation_year' room.room_slug current_year %}">
-            {{ room.room_slug }}
-        </a>
-        <br>
-    {% endfor %}
+    {% if exact_date %}
+        {% for room in rooms %}
+            <a href="{% url 'reservation_day' room.room_slug date.year date.month date.day %}">
+                {{ room.room_slug }}
+            </a>
+            <br>
+        {% endfor %}
+    {% else %}
+        {% for room in rooms %}
+            <a href="{% url 'reservation_year' room.room_slug current_year %}">
+                {{ room.room_slug }}
+            </a>
+            <br>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

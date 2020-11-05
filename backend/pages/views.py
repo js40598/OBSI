@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from reservation.tasks import update_reservation_status
+from reservation.models import Reservation
 from datetime import datetime
 from rooms.models import Room, Floor
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -19,8 +21,19 @@ def home(request):
 @login_required
 def search(request):
     floor_choices = [floor.level for floor in Floor.objects.all().order_by('-level')]
+    context = {
+        'current_year': datetime.now().year,
+        'destination_choices': Room.DESTINATION_CHOICES,
+        'floor_choices': floor_choices,
+        'time_choices': Reservation.TIME_CHOICES,
+    }
+    output_rooms = []
+    exact_date = True
     rooms = Room.objects.all()
-    if request.method == "POST":
+    if request.method == 'GET':
+        context['rooms'] = rooms
+        return render(request, 'pages/search.html', context)
+    else:
         if 'sign' in request.POST:
             if request.POST['sign']:
                 rooms = rooms.filter(sign=request.POST['sign'])
@@ -45,10 +58,45 @@ def search(request):
         if 'blackboard' in request.POST:
             if request.POST['blackboard']:
                 rooms = rooms.filter(blackboard=True)
-    context = {
-        'current_year': datetime.now().year,
-        'rooms': rooms,
-        'destination_choices': Room.DESTINATION_CHOICES,
-        'floor_choices': floor_choices
-    }
+        if 'date' in request.POST and 'time' in request.POST:
+            if request.POST['date'] and request.POST['time']:
+                date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
+                context['date'] = date
+                for room in rooms:
+                    try:
+                        Reservation.objects.get(room=room,
+                                                year_slug=date.year,
+                                                month_slug=date.month,
+                                                day_slug=date.day,
+                                                time=request.POST['time'])
+                    except ObjectDoesNotExist:
+                        output_rooms += [room]
+            elif request.POST['date'] and not request.POST['time']:
+                date = datetime.strptime(request.POST['date'], '%Y-%m-%d')
+                for room in rooms:
+                    day_available_counter = 0
+                    for time_choice in Reservation.TIME_CHOICES:
+                        try:
+                            Reservation.objects.get(room=room,
+                                                    year_slug=date.year,
+                                                    month_slug=date.month,
+                                                    day_slug=date.day,
+                                                    time=time_choice[0])
+                            day_available_counter += 1
+                        except ObjectDoesNotExist:
+                            pass
+                    if day_available_counter != len(Reservation.TIME_CHOICES):
+                        print(room.sign)
+                        output_rooms += [room]
+                context['date'] = date
+            elif not request.POST['date'] and request.POST['time']:
+                context['error'] = 'If Time is chosen Date must be too'
+                context['exact_date'] = False
+                return render(request, 'pages/search.html', context)
+            else:
+                exact_date = False
+                output_rooms = rooms
+
+    context['rooms'] = output_rooms
+    context['exact_date'] = exact_date
     return render(request, 'pages/search.html', context)
