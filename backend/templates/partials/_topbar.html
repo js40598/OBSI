@@ -2,7 +2,9 @@
     Logged in as {{ user.username }}
 <br>
     <a href="{% url 'home' %}">Home</a><br>
-    <a href="{% url 'createuser' %}">Create user</a><br>
+    {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+        <a href="{% url 'createuser' %}">Create user</a><br>
+    {% endif %}
     <a href="{% url 'search' %}">Search</a><br>
     <form action="{% url 'logoutuser' %}" method="POST" style="width: 100px; display: inline">
 
