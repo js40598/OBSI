@@ -27,7 +27,8 @@
                         {{ reservation.1.user.username }}
                     </td>
                     <td>
-                        <a href="{% url 'communicator' room_slug reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 %}">Communicator</a>
+                        <a href="{% url 'communicator' room_slug reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 reservation.1.reservation_slug %}">Communicator</a>
+{#                        <a href="{% url 'communicator' reservation.1.reservation_slug %}">Communicator</a>#}
                     </td>
                     <td>
                         {% if reservation.1.user == request.user %}

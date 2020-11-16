@@ -20,12 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
+
 # # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '2u1csc_b*$kwa1yqtf1&a^=noqsu)tlnizm4=tug#l*97ay7%!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 # ALLOWED_HOSTS = ['obsi-room-reservation.herokuapp.com']
 ALLOWED_HOSTS = []
 
@@ -33,13 +38,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
     'communicator.apps.CommunicatorConfig',
     'pages.apps.PagesConfig',
     'reservation.apps.ReservationConfig',
@@ -76,6 +81,16 @@ TEMPLATES = [
     },
 ]
 
+# Channels
+ASGI_APPLICATION = 'backend.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
@@ -86,6 +101,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'TEST': {
+            'NAME': BASE_DIR / 'db_test.sqlite3',
+        }
     }
 }
 
@@ -129,14 +147,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-ASGI_APPLICATION = "backend.asgi.application"
 
 
 # import django_heroku
 # django_heroku.settings(locals())
 
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+

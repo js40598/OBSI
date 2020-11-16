@@ -96,7 +96,10 @@ def loginuser(request):
                     blockade.blockade_expire = None
                     blockade.save()
                 login(request, user)
-                return redirect('home')
+                try:
+                    return redirect(request.GET.get('next'))
+                except TypeError:
+                    return redirect('home')
 
 
 @login_required

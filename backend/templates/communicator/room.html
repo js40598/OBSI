@@ -1,39 +1,29 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-username-input" type="text" value="sth" size="100" hidden><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room_name|json_script:"room-name" }}
-    {{ request.user.username|json_script:"username" }}
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        const username = JSON.parse(document.getElementById('username').textContent);
 
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
-            + '/'
+            + '/ws/chat/'
             + roomName
             + '/'
         );
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            {#const monthNames = ["January", "February", "March", "April", "May", "June",#}
-            {#    "July", "August", "September", "October", "November", "December"];#}
-            let dateObj = new Date();
-            {#let month = monthNames[dateObj.getMonth()];#}
-            let month = dateObj.getMonth();
-            let day = String(dateObj.getDate()).padStart(2, '0');
-            let year = dateObj.getFullYear();
-            let hours = dateObj.getHours();
-            var formattedHours = ("0" + hours).slice(-2);
-            let minutes = dateObj.getMinutes();
-            var formattedMinutes = ("0" + minutes).slice(-2);
-            let output = day + '/' + month  + '/' + year + ' ' + formattedHours + ':' + formattedMinutes;
-            document.querySelector('#chat-log').value += (data.message + ' ' + username + ' ' + output + '\n');
+            document.querySelector('#chat-log').value += (data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
@@ -51,10 +41,10 @@
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message,
-                'username': username
+                'message': message
             }));
             messageInputDom.value = '';
         };
     </script>
-{% endblock %}
+</body>
+</html>
