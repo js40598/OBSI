@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<textarea id="chat-log" cols="100" rows="20">{% for message in messages %}
+<textarea id="chat-log" cols="100" rows="20" disabled>{% for message in messages %}
 {{ message.1.content }} {{ request.user.username }} {{ message.0 }}{% endfor %}
 </textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
