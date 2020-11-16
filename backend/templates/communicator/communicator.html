@@ -1,63 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<textarea id="chat-log" cols="100" rows="20" disabled>{% for message in messages %}
+    <div style="text-align: center">
+<textarea id="chat-log" cols="100" rows="20" style="text-align: center" disabled>{% for message in messages %}
 {{ message.1.content }} {{ request.user.username }} {{ message.0 }}{% endfor %}
 </textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-username-input" type="text" value="sth" size="100" hidden><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room_name|json_script:"room-name" }}
-    {{ request.user.username|json_script:"username" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        const username = JSON.parse(document.getElementById('username').textContent);
+        <input id="chat-message-input" type="text" size="133"><br><br>
+        <input id="chat-message-submit" type="button" value="Send">
+        {{ room_name|json_script:"room-name" }}
+        {{ request.user.username|json_script:"username" }}
+        <script>
+            const roomName = JSON.parse(document.getElementById('room-name').textContent);
+            const username = JSON.parse(document.getElementById('username').textContent);
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/'
-            + roomName
-            + '/'
-        );
+            const chatSocket = new WebSocket(
+                'ws://'
+                + window.location.host
+                + '/'
+                + roomName
+                + '/'
+            );
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            {#const monthNames = ["January", "February", "March", "April", "May", "June",#}
-            {#    "July", "August", "September", "October", "November", "December"];#}
-            let dateObj = new Date();
-            {#let month = monthNames[dateObj.getMonth()];#}
-            let month = dateObj.getMonth()+1;
-            let day = String(dateObj.getDate()).padStart(2, '0');
-            let year = dateObj.getFullYear();
-            let hours = dateObj.getHours();
-            var formattedHours = ("0" + hours).slice(-2);
-            let minutes = dateObj.getMinutes();
-            var formattedMinutes = ("0" + minutes).slice(-2);
-            let output = day + '/' + month  + '/' + year + ' ' + formattedHours + ':' + formattedMinutes;
-            document.querySelector('#chat-log').value += (data.message + ' ' + username + ' ' + output + '\n');
-        };
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                {#const monthNames = ["January", "February", "March", "April", "May", "June",#}
+                {#    "July", "August", "September", "October", "November", "December"];#}
+                let dateObj = new Date();
+                {#let month = monthNames[dateObj.getMonth()];#}
+                let month = dateObj.getMonth()+1;
+                let day = String(dateObj.getDate()).padStart(2, '0');
+                let year = dateObj.getFullYear();
+                let hours = dateObj.getHours();
+                var formattedHours = ("0" + hours).slice(-2);
+                let minutes = dateObj.getMinutes();
+                var formattedMinutes = ("0" + minutes).slice(-2);
+                let output = day + '/' + month  + '/' + year + ' ' + formattedHours + ':' + formattedMinutes;
+                document.querySelector('#chat-log').value += (data.message + ' ' + username + ' ' + output + '\n');
+            };
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+            };
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+            document.querySelector('#chat-message-input').focus();
+            document.querySelector('#chat-message-input').onkeyup = function(e) {
+                if (e.keyCode === 13) {  // enter, return
+                    document.querySelector('#chat-message-submit').click();
+                }
+            };
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'room_name': roomName,
-                'username': username,
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
+            document.querySelector('#chat-message-submit').onclick = function(e) {
+                const messageInputDom = document.querySelector('#chat-message-input');
+                const message = messageInputDom.value;
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'room_name': roomName,
+                    'username': username,
+                }));
+                messageInputDom.value = '';
+            };
+        </script>
+    </div>
 {% endblock %}
