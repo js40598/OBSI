@@ -2,6 +2,9 @@
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from communicator.models import Message
+from users.models import User
+from reservation.models import Reservation
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -28,6 +31,11 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
+
+        m = Message(user=User.objects.get(username=text_data_json['username']),
+                    reservation=Reservation.objects.get(reservation_slug=text_data_json['room_name']),
+                    content=text_data_json['message'])
+        m.save()
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

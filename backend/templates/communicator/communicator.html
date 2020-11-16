@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+<textarea id="chat-log" cols="100" rows="20">{% for message in messages %}
+{{ message.1.content }} {{ request.user.username }} {{ message.0 }}{% endfor %}
+</textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-username-input" type="text" value="sth" size="100" hidden><br>
     <input id="chat-message-submit" type="button" value="Send">
@@ -25,7 +27,7 @@
             {#    "July", "August", "September", "October", "November", "December"];#}
             let dateObj = new Date();
             {#let month = monthNames[dateObj.getMonth()];#}
-            let month = dateObj.getMonth();
+            let month = dateObj.getMonth()+1;
             let day = String(dateObj.getDate()).padStart(2, '0');
             let year = dateObj.getFullYear();
             let hours = dateObj.getHours();
@@ -52,7 +54,8 @@
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 'message': message,
-                'username': username
+                'room_name': roomName,
+                'username': username,
             }));
             messageInputDom.value = '';
         };

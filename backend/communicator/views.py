@@ -1,28 +1,11 @@
-from django.shortcuts import render, redirect
-from datetime import datetime
+from django.shortcuts import render, redirect, HttpResponse
+from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from reservation.models import Reservation
 from rooms.models import Room
+from communicator.models import Message
+from backend.settings import TIME_ZONE
 
-# Create your views here.
-
-#
-# def room(request, room_name):
-#     return render(request, 'communicator/room.html', {
-#         'room_name': room_name
-#     })
-
-#
-# def communicator(request, room_name):
-#     # reservation = Reservation.objects.get(reservation_slug=reservation_slug)
-#     context = {
-#         # 'room_name': f'{room_slug}/{year}/{month}/{day}/{time}/communicator',
-#         # 'room_name': reservation_slug,
-#         'room_name': room_name,
-#         'current_year': datetime.now().year,
-#     }
-#     return render(request, 'communicator/communicator.html', context)
-#
 
 def communicator(request, room_slug, year, month, day, time, room_name):
     reservation = Reservation.objects.get(room__room_slug=room_slug,
@@ -30,8 +13,11 @@ def communicator(request, room_slug, year, month, day, time, room_name):
                                           month_slug=month,
                                           day_slug=day,
                                           time=time)
+    messages = [[datetime.strftime(message.datetime + timedelta(hours=1), '%d/%m/%Y %H:%M'), message]
+                for message in Message.objects.filter(reservation=reservation)]
     context = {
-        'communicator_instance_path': f'{room_slug}/{year}/{month}/{day}/{time}',
+        'messages': messages,
+        # 'communicator_instance_path': f'{room_slug}/{year}/{month}/{day}/{time}',
         # 'room_name': reservation.reservation_slug,
         # 'room_name': reservation.reservation_slug,
         'room_name': room_name,
@@ -41,8 +27,5 @@ def communicator(request, room_slug, year, month, day, time, room_name):
     return render(request, 'communicator/communicator.html', context)
 
 
-# def room(request, room_name):
-#     context = {
-#         'room_name': room_name
-#     }
-#     return render(request, 'communicator/communicator.html', context)
+def messageajax(request, room_slug, year, month, day, time, room_name):
+    return HttpResponse(request.POST['text'])

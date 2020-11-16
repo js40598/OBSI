@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from communicator import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('chat/', include('communicator.urls')),
+    path('ajax/communicator/message', views.messageajax, name='messageajax'),
 
     path('', include('pages.urls')),
     path('accounts/', include('users.urls')),
