@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<meta lang="pl-PL">
+
+<head>
+    <title>Panel rejestracji</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style_paneli.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="index.html">Rezerweo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="background_rejestracja">
+        <div class="tło_rejestracja">
+            <div class="opis">
+                <img src="/icons/iconfinder_add_user_925890.png">
+            </div>
+        </div>
+
+        <div class="panel_rejestracja">
+            <h1>Stwórz konto</h1>
+            <form method="post">
+                <div class="formularz_rejestracja">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Imię</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Nazwisko</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Adres e-mail</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="text" required>
+                    <span></span>
+                    <label>Login</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Hasło</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="password" required>
+                    <span></span>
+                    <label>Powtórz hasło</label>
+                </div>
+                <div class="select_box">
+                    <div class="1">
+                        <input type="checkbox" name="Wykładowca" value="Wykładowca" id="wykładowca">
+                        <label for="wykładowca">Wykładowca</label>
+                        <input type="checkbox" name="Student" value="Student" id="student">
+                        <label for="student">Student</label>
+                    </div>
+                </div>
+                <input type="button" value="Zarejestruj" class="przycisk_rejestracja">
+            </form>
+        </div>
+    </div>
+
+
+    <footer></footer>
+    <script src="./app.js"></script>
+</body>
+
+</html>
