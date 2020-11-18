@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.contrib.auth import logout
 from reservation.tasks import update_reservation_status
 from reservation.models import Reservation
 from datetime import datetime
@@ -9,6 +10,12 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
+def landing(request):
+    logout(request)
+    return render(request, 'pages/landing.html')
+
+
+@login_required
 def home(request):
     update_reservation_status()
     context = {

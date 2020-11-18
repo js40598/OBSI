@@ -22,8 +22,8 @@ def createuser(request):
             try:
                 User.objects.get(email=request.POST['email'])
                 return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                 'error': "Email address is in use already"})
-            except ObjectDoesNotExist and MultipleObjectsReturned:
+                                                                  'error': "Email address is in use already"})
+            except ObjectDoesNotExist or MultipleObjectsReturned:
                 try:
                     with transaction.atomic():
                         user = User.objects.create_user(
@@ -41,13 +41,13 @@ def createuser(request):
                         blockade = UserIncorrectLoginLimit(user=user, counter=0, is_blocked=False, blockade_expire=None)
                         blockade.save()
                         user.save()
-                        return redirect('home')
+                        return redirect('createuser')
                 except IntegrityError:
                     return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                     'error': "The username has already been taken"})
+                                                                      'error': "The username has already been taken"})
         else:
             return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                             'error': "Passwords didn't match"})
+                                                              'error': "Passwords didn't match"})
 
 
 def loginuser(request):

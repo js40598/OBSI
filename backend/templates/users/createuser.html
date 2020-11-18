@@ -1,40 +1,80 @@
 {% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block title %}Panel rejestracji{% endblock %}
+
+
+{% block style %}{% static 'css/panels.css' %}{% endblock %}
+
+
 {% block content %}
-<h1>Create User</h1>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h2>{{ error }}</h2>
 
-<form method="POST">
-    {% csrf_token %}
+    <div class="background_rejestracja">
+        <div class="tło_rejestracja">
+            <div class="opis">
+                <img src="{% static 'icons/iconfinder_add_user_925890.png' %}">
+            </div>
+        </div>
 
-    <p>
-        {{ form.email.label }}
-        {{ form.email }}
-    </p>
-    <p>
-        {{ form.username.label }}
-        {{ form.username }}
-    </p>
-    <p>
-        {{ form.first_name.label }}
-        {{ form.first_name }}
-    </p>
-    <p>
-        {{ form.last_name.label }}
-        {{ form.last_name }}
-    </p>
-    <p>
-        <label for="is_lecturer">Is lecturer</label><br>
-        <input type="checkbox" name="is_lecturer" value="is_lecturer">
-    </p>
-    <p>
-        {{ form.password1.label }}
-        {{ form.password1 }}
-    </p>
-    <p>
-        {{ form.password2.label }}
-        {{ form.password2 }}
-    </p>
-    <button type="submit">Sign Up</button>
-</form>
+        <div class="panel_rejestracja">
+            <h1>Stwórz konto</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="formularz_rejestracja">
+                    <input type="text" name="first_name" required>
+                    <span></span>
+                    <label>Imię</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="text" name="last_name" required>
+                    <span></span>
+                    <label>Nazwisko</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="email" name="email" required>
+                    <span></span>
+                    <label>Adres e-mail</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="text" name="username" required>
+                    <span></span>
+                    <label>Login</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="password" name="password1" required>
+                    <span></span>
+                    <label>Hasło</label>
+                </div>
+                <div class="formularz_rejestracja">
+                    <input type="password" name="password2" required>
+                    <span></span>
+                    <label>Powtórz hasło</label>
+                </div>
+                <div class="select_box">
+                    <div class="1">
+                        <input type="checkbox" name="is_lecturer" value="is_lecturer" id="wykładowca">
+                        <label for="wykładowca">Wykładowca</label>
+                    </div>
+                </div>
+                <input type="submit" value="Zarejestruj" class="przycisk_rejestracja">
+            </form>
+        </div>
+    </div>
+
+
+    <footer></footer>
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

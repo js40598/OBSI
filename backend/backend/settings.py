@@ -142,11 +142,17 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'backend/static'
+]
 
-
+# Media files
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
 
 
 # import django_heroku
