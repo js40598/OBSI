@@ -22,7 +22,7 @@ def createuser(request):
             try:
                 User.objects.get(email=request.POST['email'])
                 return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                  'error': "Email address is in use already"})
+                                                                 'error': "Email address is in use already"})
             except ObjectDoesNotExist or MultipleObjectsReturned:
                 try:
                     with transaction.atomic():
@@ -44,10 +44,10 @@ def createuser(request):
                         return redirect('createuser')
                 except IntegrityError:
                     return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                      'error': "The username has already been taken"})
+                                                                     'error': "The username has already been taken"})
         else:
             return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                              'error': "Passwords didn't match"})
+                                                             'error': "Passwords didn't match"})
 
 
 def loginuser(request):

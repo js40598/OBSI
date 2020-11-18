@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name
@@ -74,8 +75,8 @@ def reservation_day(request, room_slug, year, month, day):
                                         month_slug=month,
                                         day_slug=day,
                                         time=request.POST['time'])
-                return redirect('reservation_day', room_slug, year, month, day,
-                                {'error': 'You already have another room reserved in the same time!'})
+                messages.error(request, 'You already have another room reserved in the same time!')
+                return redirect('reservation_day', room_slug, year, month, day)
             # if user has no other reservation in the same time
             except ObjectDoesNotExist:
                 # check if nobody reserved this since last response
@@ -83,24 +84,24 @@ def reservation_day(request, room_slug, year, month, day):
                     # if someone reserved this since last response
                     try:
                         Reservation.objects.get(room=room,
-                                                year=year,
-                                                month=month,
-                                                day=day,
+                                                year_slug=year,
+                                                month_slug=month,
+                                                day_slug=day,
                                                 time=request.POST['time'])
                         # do not reserve and show message
-                        return redirect('reservation_day', room_slug, year, month, day,
-                                        {'error': 'Someone else just reserved this room!'})
+                        messages.error(request, 'Someone else just reserved this room!')
+                        return redirect('reservation_day', room_slug, year, month, day)
                     # if nobody reserved this since last response
                     except ObjectDoesNotExist:
                         # create new reservation
                         new_reservation = Reservation(user=request.user,
-                                                      room=Room.objects.get(room_slug=room_slug),
+                                                      room=room,
                                                       date=date(year, month, day),
                                                       time=request.POST['time'])
                         new_reservation.save()
                         # show message
-                        return redirect('reservation_day', room_slug, year, month, day,
-                                        {'error': 'Room reserved!'})
+                        messages.success(request, 'Room reserved!')
+                        return redirect('reservation_day', room_slug, year, month, day)
         elif 'remove_reservation' in request.POST:
             # if nobody forced reservation of this room since last response
             try:
@@ -113,13 +114,13 @@ def reservation_day(request, room_slug, year, month, day):
                                                                  day_slug=day,
                                                                  time=request.POST['time'])
                     remove_reservation.delete()
-                    return redirect('reservation_day', room_slug, year, month, day,
-                                    {'error': 'Reservation removed!'})
+                    messages.success(request, 'Reservation removed!')
+                    return redirect('reservation_day', room_slug, year, month, day)
             # if someone forced reservation of this room since last response
             except ObjectDoesNotExist:
                 # do not remove reservation and show message
-                return redirect('reservation_day', room_slug, year, month, day,
-                                {'error': 'Reservation removed!'})
+                messages.success(request, 'Reservation removed!')
+                return redirect('reservation_day', room_slug, year, month, day)
         elif 'force_reservation' in request.POST:
             # if user has other reservation in the same time
             try:
@@ -129,8 +130,8 @@ def reservation_day(request, room_slug, year, month, day):
                                         day_slug=day,
                                         time=request.POST['time'])
                 # do not force reservation and show message
-                return redirect('reservation_day', room_slug, year, month, day,
-                                {'error': 'You already have another room reserved in the same time'})
+                messages.success(request, 'You already have another room reserved in the same time!')
+                return redirect('reservation_day', room_slug, year, month, day)
             # if user has no other reservation in the same time
             except ObjectDoesNotExist:
                 # if nobody deleted reservation of this room since last response
@@ -143,33 +144,33 @@ def reservation_day(request, room_slug, year, month, day):
                             if forced_reservation.user.groups.get().name in "Student Lecturer":
                                 forced_reservation.user = request.user
                                 forced_reservation.save()
-                                return redirect('reservation_day', room_slug, year, month, day,
-                                                {'error': 'Reservation forced!'})
+                                messages.success(request, 'Reservation forced!')
+                                return redirect('reservation_day', room_slug, year, month, day)
                             else:
-                                return redirect('reservation_day', room_slug, year, month, day,
-                                                {'error': 'Someone else with higher priority just forced this!'})
+                                messages.success(request, 'Someone else with higher priority just forced this!')
+                                return redirect('reservation_day', room_slug, year, month, day)
                         # Local Admin group can force reservation on Student, Lecturer and Staff groups
                         elif user_group == 'Local Admin':
                             if forced_reservation.user.groups.get().name in "Student Lecturer Staff":
                                 forced_reservation.user = request.user
                                 forced_reservation.save()
-                                return redirect('reservation_day', room_slug, year, month, day,
-                                                {'error': 'Reservation forced!'})
+                                messages.success(request, 'Reservation forced!')
+                                return redirect('reservation_day', room_slug, year, month, day)
                             else:
-                                return redirect('reservation_day', room_slug, year, month, day,
-                                                {'error': 'Someone else with higher priority just forced this!'})
+                                messages.success(request, 'Someone else with higher priority just forced this!')
+                                return redirect('reservation_day', room_slug, year, month, day)
                         # Admin group can force reservation on every group
                         elif user_group == 'Admin':
                             forced_reservation.user = request.user
                             forced_reservation.save()
-                            return redirect('reservation_day', room_slug, year, month, day,
-                                            {'error': 'Reservation forced!'})
+                            messages.success(request, 'Reservation forced!')
+                            return redirect('reservation_day', room_slug, year, month, day)
 
                 # if someone deleted reservation of this room since last response
                 except ObjectDoesNotExist:
                     # do not force reservation and show message
-                    return redirect('reservation_day', room_slug, year, month, day,
-                                    {'error': 'Someone just removed reservation of this room!'})
+                    messages.success(request, 'Someone just removed reservation of this room!')
+                    return redirect('reservation_day', room_slug, year, month, day)
     context = {
         'user_group': user_group,
         'room_slug': room_slug,
