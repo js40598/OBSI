@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl-PL">
+<html>
+
+<head>
+    <title>System rezerwacji sal</title>
+    <meta cherset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/db53f27c17.js" crossorigin="anonymous"></script>
+    <meta http-equiv="refresh" content="60">
+</head>
+
+<body>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'loginuser' %}" opis-po="Zaloguj">Zaloguj się</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hero" style="background-image: url({% static 'images/image.jpg' %});">
+        <div class="hero container">
+            <div class="opis">
+                <h1>Znajdź, wybierz <span>zarezerwuj!</span></h1>
+                <p>Zaloguj się by zyskać dostęp do szybkiego i wygodnego, systemu rezerwowania sal na
+                    wydziale Informatycznym Zachodniopomorskeigo Uniwersytetu Technologicznego w Szczecinie. </p>
+                <a href="{% url 'loginuser' %}"><input type="button" value="Sprawdź"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="promo">
+        <div class="promo container">
+            <div class="opis">
+                <h1>Zalety Rezerweo</h1>
+                <p>Opis opis opis opis Opis opis opis opis Opis opis opis opis Opis opis opis opis Opis opis opis opis
+                    Opis opis opis opis</p>
+            </div>
+            <div class="boxy">
+                <div class="item">
+                    <img src="{% static 'icons/passkey.png' %}">
+                    <h1>Łatwy dostęp</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper lectus orci. Proin
+                        finibus, magna euismod hendrerit rhoncus, odio tortor tincidunt orci, ut vehicula metus urna eu
+                        neque. Sed feugiat sit amet lacus efficitur tincidunt. </p>
+                </div>
+                <div class="item">
+                    <img src="{% static 'icons/fast.png' %}">
+                    <h1>Szybkość usługi</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper lectus orci. Proin
+                        finibus, magna euismod hendrerit rhoncus, odio tortor tincidunt orci, ut vehicula metus urna eu
+                        neque. Sed feugiat sit amet lacus efficitur tincidunt. </p>
+                </div>
+                <div class="item">
+                    <img src="{% static 'icons/verified.png' %}">
+                    <h1>Bezpłatne konto</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper lectus orci. Proin
+                        finibus, magna euismod hendrerit rhoncus, odio tortor tincidunt orci, ut vehicula metus urna eu
+                        neque. Sed feugiat sit amet lacus efficitur tincidunt. </p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="poradnik">
+        <div class="poradnik container">
+            <div class="prawa">
+                <img src="{% static 'images/768px-Calendar_(macOS).png' %}">
+            </div>
+            <div class="lewa">
+                <div class="element">
+                    <h2>Jak uzywać serwisu?</h2>
+                </div>
+                <div class="element">
+                    <h1>1</h1>
+                    <p>Zaloguj się do systemu Rezerweo</p>
+                </div>
+                <div class="element">
+                    <h1>2</h1>
+                    <p>Znajdź salę z odpowiednim wyposazeniem</p>
+                </div>
+                <div class="element">
+                    <h1>3</h1>
+                    <p>Wybierz datę i sprawdź dostępność pomieszczenia</p>
+                </div>
+                <div class="element">
+                    <h1>4</h1>
+                    <p>Rezerwacja zakończona!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer container">
+            <div class="firma">Rezerweo</div>
+            <div class="social-media">
+                <div class="social-ikona">
+                    <a href="www.facebook.com">
+                        <img src="{% static 'icons/facebook-like-5-48.png' %}" alt="Rezerweo Facebook">
+                    </a>
+                </div>
+
+                <div class="social-ikona">
+                    <a href="www.instagram.com">
+                        <img src="{% static 'icons/instagram-5-48.png' %}" alt="Rezerweo Instagram">
+                    </a>
+                </div>
+                <div class="social-ikona">
+                    <a href="www.twitter.com">
+                        <img src="{% static 'icons/twitter-5-48.png' %}" alt="Rezerweo Twitter">
+                    </a>
+                </div>
+            </div>
+            <p>2020 Rezerweo. Wszelkie prawa zastrzezone</p>
+        </div>
+    </footer>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>
