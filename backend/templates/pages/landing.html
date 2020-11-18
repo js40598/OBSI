@@ -1,18 +1,16 @@
+{% extends 'base.html' %}
+
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="pl-PL">
-<html>
 
-<head>
-    <title>System rezerwacji sal</title>
-    <meta cherset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/db53f27c17.js" crossorigin="anonymous"></script>
-    <meta http-equiv="refresh" content="60">
-</head>
 
-<body>
+{% block title %}System rezerwacji sal{% endblock %}
+
+
+{% block style %}{% static 'css/style.css' %}{% endblock %}
+
+
+{% block content %}
     <section id="header">
         <div class="header container">
             <div class="nawigacja">
@@ -130,6 +128,4 @@
         </div>
     </footer>
     <script src="{% static 'js/app.js' %}"></script>
-</body>
-
-</html>
+{% endblock %}

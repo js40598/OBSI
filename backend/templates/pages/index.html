@@ -1,18 +1,17 @@
+{% extends 'base.html' %}
+
+
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<meta lang="pl-PL">
 
-<head>
-    <title>Rezerwacja sal na wydziale informatyki ZUT</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+{% block title %}Rezerwacja sal na wydziale informatyki ZUT{% endblock %}
 
-<body>
-    <section id="header">
+
+{% block style %}{% static 'css/style.css' %}{% endblock %}
+
+
+{% block content %}
+        <section id="header">
         <div class="header container">
             <div class="nawigacja">
                 <div class="logo">
@@ -131,6 +130,4 @@
     </footer>
 
     <script src="{% static 'js/app.js' %}"></script>
-</body>
-
-</html>
+{% endblock %}
