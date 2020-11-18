@@ -44,21 +44,24 @@ def reservation_day(request, room_slug, year, month, day):
     reservations = []
     for i in range(1, len(Reservation.TIME_CHOICES)+1):
         try:
+            reservation_holder = Reservation.objects.get(room__room_slug=room_slug,
+                                                      year_slug=year,
+                                                      month_slug=month,
+                                                      day_slug=day,
+                                                      time=i)
             reservations += [[True,
-                              Reservation.objects.get(room__room_slug=room_slug,
-                                                      year_slug=year,
-                                                      month_slug=month,
-                                                      day_slug=day,
-                                                      time=i),
+                              reservation_holder,
                               time_choices[i-1],
-                              Reservation.objects.get(room__room_slug=room_slug,
-                                                      year_slug=year,
-                                                      month_slug=month,
-                                                      day_slug=day,
-                                                      time=i).user.groups.get().name
+                              reservation_holder.user.groups.get().name,
                               ]]
         except ObjectDoesNotExist:
-            reservations += [[False, time_choices[i-1]]]
+            reservations += [[False,
+                              time_choices[i-1],
+                              True if datetime.now() < datetime(year,
+                                                                month,
+                                                                day,
+                                                                6 + int(time_choices[i-1][0]) * 2)
+                              else False]]
     if request.method == 'POST':
         if 'create_reservation' in request.POST:
             try:

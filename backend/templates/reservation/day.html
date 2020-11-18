@@ -31,7 +31,7 @@
 {#                        <a href="{% url 'communicator' reservation.1.reservation_slug %}">Communicator</a>#}
                     </td>
                     <td>
-                        {% if reservation.1.user == request.user %}
+                        {% if reservation.1.user == request.user and reservation.1.is_upcoming %}
                         <form method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="time" value="{{ reservation.2.0 }}">
@@ -46,39 +46,55 @@
                     <td>
                         {% if reservation.3 == 'Student' %}
                             {% if user_group != 'Student' %}
+                                {% if reservation.1.is_upcoming %}
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
                                     <input type="hidden" name="time" value="{{ reservation.2.0 }}">
                                     <button type="submit">Force reservation</button>
                                 </form>
+                                {% else %}
+                                    <button type="submit" disabled>Force reservation</button>
+                                {% endif %}
                             {% endif %}
                         {% elif reservation.3 == 'Lecturer' %}
                             {% if user_group in 'Staff Local Admin' %}
+                                {% if reservation.1.is_upcoming %}
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
                                     <input type="hidden" name="time" value="{{ reservation.2.0 }}">
                                     <button type="submit">Force reservation</button>
                                 </form>
+                                {% else %}
+                                    <button type="submit" disabled>Force reservation</button>
+                                {% endif %}
                             {% endif %}
                         {% elif reservation.3 == 'Staff' %}
                             {% if user_group in 'Local Admin' %}
+                                {% if reservation.1.is_upcoming %}
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
                                     <input type="hidden" name="time" value="{{ reservation.2.0 }}">
                                     <button type="submit">Force reservation</button>
                                 </form>
+                                {% else %}
+                                    <button type="submit" disabled>Force reservation</button>
+                                {% endif %}
                             {% endif %}
                         {% elif reservation.3 == 'Local Admin' %}
                             {% if user_group in 'Admin' %}
+                                {% if reservation.1.is_upcoming %}
                                 <form method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
                                     <input type="hidden" name="time" value="{{ reservation.2.0 }}">
                                     <button type="submit">Force reservation</button>
                                 </form>
+                                {% else %}
+                                    <button type="submit" disabled>Force reservation</button>
+                                {% endif %}
                             {% endif %}
                         {% else %}
                             <button disabled>Force reservation</button>
@@ -94,12 +110,16 @@
                     <td>
                     </td>
                     <td>
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="create_reservation">
-                            <input type="hidden" name="time" value="{{ reservation.1.0 }}">
-                            <button type="submit">Reserve</button>
-                        </form>
+                        {% if reservation.2 %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="create_reservation">
+                                <input type="hidden" name="time" value="{{ reservation.1.0 }}">
+                                <button type="submit">Reserve</button>
+                            </form>
+                        {% else %}
+                            <button type="submit" disabled>Reserve</button>
+                        {% endif %}
                     </td>
                 {% endif %}
             </tr>
