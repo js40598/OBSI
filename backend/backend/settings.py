@@ -32,13 +32,14 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = ['obsi-room-reservation.herokuapp.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['161.35.106.37', 'obsi-room-reservation.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'channels',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

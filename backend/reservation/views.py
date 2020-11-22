@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name
-from calendar import Calendar
+from reservation.calendar import Calendar
 from datetime import date, datetime
 from reservation.models import Reservation
 from rooms.models import Room
