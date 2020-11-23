@@ -5,7 +5,7 @@ from users.utils import user_blockade_controller
 
 
 class UserIncorrectLoginLimit(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     counter = models.PositiveIntegerField()
     is_blocked = models.BooleanField()
     blockade_expire = models.DateTimeField(null=True, blank=True, default=None)

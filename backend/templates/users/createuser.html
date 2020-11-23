@@ -31,25 +31,26 @@
 
         <div class="panel_rejestracja">
             <h1>Stwórz konto</h1>
+            {{ error }}
             <form method="POST">
                 {% csrf_token %}
                 <div class="formularz_rejestracja">
-                    <input type="text" name="first_name" required>
+                    <input type="text" name="first_name" value="{{ values.first_name }}" required>
                     <span></span>
                     <label>Imię</label>
                 </div>
                 <div class="formularz_rejestracja">
-                    <input type="text" name="last_name" required>
+                    <input type="text" name="last_name" value="{{ values.last_name }}" required>
                     <span></span>
                     <label>Nazwisko</label>
                 </div>
                 <div class="formularz_rejestracja">
-                    <input type="email" name="email" required>
+                    <input type="email" name="email" value="{{ values.email }}" required>
                     <span></span>
                     <label>Adres e-mail</label>
                 </div>
                 <div class="formularz_rejestracja">
-                    <input type="text" name="username" required>
+                    <input type="text" name="username" value="{{ values.username }}" required>
                     <span></span>
                     <label>Login</label>
                 </div>
