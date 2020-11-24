@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<html>
+
+<head>
+    <title>System rezerwacji sal</title>
+    <meta cherset="UTF-8">
+    <link rel="stylesheet" href="css/sale.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/db53f27c17.js" crossorigin="anonymous"></script>
+    <meta http-equiv="refresh" content="60">
+</head>
+
+<body>
+
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="indexpolog.html">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="komunikator.html" opis-po="Sale">Pomoc</a></li>
+                        <li><a href="sale.html" opis-po="Home">Rezerwuj</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wyszukiwarka">
+        <div class="wyszukiwarka container">
+            <form action="" method="POST">
+                <h1>Znajdź i zarezerwuj!</h1>
+                <div class="panel1">
+                    <input type="text" placeholder="Numer sali">
+                    <input type="date" class="search_button">
+                    <input type="time" class="search_button">
+
+                    <select>
+                        <option>Piętro</option>
+                    </select>
+                </div>
+                <div class="panel2">
+                    <div class="dodatkowe">
+                        <div class="item">
+                            <h3>Rodzaj sali</h3>
+                            <select>
+                                <option>Dowolna</option>
+                            </select>
+                        </div>
+                        <div class="item">
+                            <h3>Ilość miejsc</h3>
+                            <select>
+                                <option>Dowolna</option>
+                            </select>
+                        </div>
+                        <div class="item">
+                            <h3>Ilość komputerów</h3>
+                            <select>
+                                <option>Dowolna</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h3>Dodatkowe mozliowści</h3>
+                    <div class="check_boxy">
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="tablica" value="tablica" id="">
+                            <label for="tablica">Tablica</label>
+                        </div>
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="projektor" value="projektor" id="projektor">
+                            <label for="projektor">Projektor</label>
+                        </div>
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="tablica_multimedialna" value="tablica_multimedialna"
+                                id="tablica_multimedialna">
+                            <label for="tablica_multimedialna">Tablica multimedialna</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="przycisk">
+                    <button type="submit">Szukaj</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="wyniki_wysz">
+        <div class="wyniki_wysz container">
+            <div class="results">
+                <h1></h1>
+                <h2></h2>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
