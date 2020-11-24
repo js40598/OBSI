@@ -37,6 +37,7 @@ a {
 #header .header {
     min-height: 6vh;
     background-color: black;
+    opacity: .92;
 }
 
 #header .header .zielony {
@@ -48,7 +49,7 @@ a {
     font-weight: 600;
     color: white;
     padding-left: 10px;
-    opacity: .8;
+    opacity: .88;
 }
 
 #header .nawigacja {

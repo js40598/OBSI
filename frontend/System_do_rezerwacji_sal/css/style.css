@@ -37,9 +37,9 @@ a {
 }
 
 #header .header {
-    min-height: 8vh;
+    min-height: 6vh;
     background-color: black;
-    opacity: .8;
+    opacity: .92;
 }
 
 #header .header .zielony {
@@ -51,7 +51,7 @@ a {
     font-weight: 600;
     color: white;
     padding-left: 10px;
-    opacity: .8;
+    opacity: .88;
 }
 
 #header .nawigacja {
@@ -331,12 +331,14 @@ span {
 #promo .promo .opis h1 {
     color: #307054;
     font-size: 3.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 #promo .promo .opis p {
     color: rgb(114, 114, 114);
     font-size: 1.4rem;
+    width: 70%;
+    margin:0 auto;
 }
 
 #promo .promo .boxy {
@@ -420,8 +422,8 @@ span {
 }
 
 #poradnik .poradnik .prawa img {
-    width: 85%;
-    height: 85%;
+    width: 70%;
+    margin-top: 200px;
 }
 
 /*Footer*/

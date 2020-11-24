@@ -41,7 +41,7 @@ a {
 #header .header {
     min-height: 6vh;
     background-color: black;
-    opacity: .8;
+    opacity: .92;
 }
 
 #header .header .zielony {
@@ -53,7 +53,7 @@ a {
     font-weight: 600;
     color: white;
     padding-left: 10px;
-    opacity: .8;
+    opacity: .88;
 }
 
 #header .nawigacja {
@@ -236,7 +236,7 @@ padding-top: 3px;
 
 #komunikator .box_komunikatora input{
     width: 80%;
-    height: 40px;
+    height: 55px;
     border-radius:30px;
     background-color: v;
     border: none;
@@ -256,13 +256,23 @@ top:12px;
 }
 
 
-#komunikator .box_komunikatora .wiadomosc img{
-    width: 30px;
-    height: 30px;
+#komunikator .box_komunikatora .wiadomosc button{
     position: relative;
-left:55px;
+    left:45px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
 }
 
+#komunikator .box_komunikatora .wiadomosc button img{
+    width: 45px;
+    filter: brightness(0.9);
+}
+
+#komunikator .box_komunikatora .wiadomosc button img:hover{
+filter: brightness(1);
+}
 
 /*Opis*/
 
