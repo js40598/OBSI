@@ -181,7 +181,9 @@ a{
 #wyszukiwarka .wyszukiwarka{
     height: 250px;
     width: 100%;
-    background-image: url();
+    background-image: url(/frontend/System_do_rezerwacji_sal/images/image.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
 #wyszukiwarka form {
@@ -191,8 +193,8 @@ a{
 }
 
 #wyszukiwarka form h1{
-    font-size: 3rem;
-    color: #59c496;
+    font-size: 3.5rem;
+    color: #69f1b6;
    margin:0 auto;
 text-transform: uppercase;
     margin-bottom: 60px;
@@ -246,12 +248,13 @@ color: grey;
 
 
 #wyszukiwarka .panel2{
-    background-color: #000000;
-    opacity: 0.9;
+    background-color: #272727;
+    opacity: 0.95;
     width: 100%;
     height: 220px; 
     border-radius: 20px;
     border: 2px solid black;
+    z-index: 10;
 }
 
 #wyszukiwarka form .panel2 .dodatkowe{
