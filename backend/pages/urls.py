@@ -18,6 +18,7 @@ from django.urls import path, include
 from pages import views
 
 urlpatterns = [
+    path('landing/', views.landing, name='landing'),
     path('', views.home, name='home'),
     path('search/', views.search, name='search'),
 ]

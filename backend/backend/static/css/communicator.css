@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background-color: #dbdbdb;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Sekcja header*/
+
+#header {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: auto;
+}
+
+#header .header {
+    min-height: 6vh;
+    background-color: black;
+    opacity: .8;
+}
+
+#header .header .zielony {
+    color: #86C232;
+}
+
+#header .header .logo a {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    padding-left: 10px;
+    opacity: .8;
+}
+
+#header .nawigacja {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    padding: 0 10px;
+}
+
+#header .lista-nawigacji ul {
+    list-style: none;
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    left: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul.active {
+    left: 20%;
+}
+
+
+#header .lista-nawigacji ul a {
+    letter-spacing: .3rem;
+    text-decoration: none;
+    color: #9e9e9e;
+    text-transform: uppercase;
+    padding: 50px;
+    display: block;
+}
+
+#header .lista-nawigacji ul a:hover {
+    border-color: #59c496;
+    color: #59c496;
+    transition: ease-in .35s;
+}
+
+#header .lista-nawigacji ul a::after {
+    content: attr(opis-po);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: #181818;
+    font-size: 6rem;
+    letter-spacing: 5px;
+    z-index: -1;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul li:hover a::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/*Przycisk nawigacji mobilnej*/
+
+#header .hamburger {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    z-index: 100;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+
+#header .hamburger .bar {
+    height: 2px;
+    width: 20px;
+    position: relative;
+    background-color: white;
+    z-index: -1;
+}
+
+#header .hamburger .bar::after,
+#header .hamburger .bar::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: white;
+    transition: .4s ease;
+    transition-property: top, bottom;
+}
+
+#header .hamburger .bar::before {
+    bottom: 7px;
+}
+
+#header .hamburger .bar::after {
+    top: 7px;
+}
+
+#header .hamburger.active .bar::after {
+    top: 0;
+}
+
+#header .hamburger.active .bar::before {
+    bottom: 0;
+}
+
+/*Komunikator*/
+
+#komunikator .komunikator{
+    width: 100%;
+    height: 100vh;
+}
+
+#komunikator .komunikator .box_komunikatora{
+    width: 40%;
+    height:80%;
+    position: absolute;
+    top: 70%;
+    left: 90%;
+    background-color: whitesmoke;
+    transform: translate(-90%, -70%);
+    border-radius: 30px;
+}
+
+
+/*Opis*/
+
+#opis .opis{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top:180px;
+    padding-left: 60px;
+}
+
+#opis .opis h1{
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+#opis .opis p{
+    font-size: 1.3rem;
+    font-weight: lighter;
+    width: 80%;
+    line-height: 2rem;
+    margin-bottom: 20px;
+}
+
+#opis .opis img{
+    width: 60%;
+    height: 60%;
+    margin:30px 0 0 200px;
+}
+
+
+@media only screen and (min-width:992px) {
+
+    #header .hamburger {
+        display: none;
+    }
+
+    #header .lista-nawigacji {
+        height: 50px;
+    }
+
+    #header .lista-nawigacji ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content;
+        background-color: transparent;
+    }
+
+    #header .lista-nawigacji ul li {
+        display: inline-block;
+    }
+
+    #header .lista-nawigacji ul a {
+        font-size: .9rem;
+        font-weight: 500;
+        position: relative;
+        bottom: 31px;
+        left: 55px;
+    }
+
+    #header .lista-nawigacji ul a::after {
+        display: none;
+    }
+
+}
+

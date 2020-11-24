@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<meta lang="pl-PL">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% block style %}{% endblock %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 {% include 'partials/_topbar.html' %}
 {% block content %}

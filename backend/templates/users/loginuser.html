@@ -1,20 +1,61 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1>Login</h1>
+{% load static %}
 
-<h2>{{ error }}</h2>
+<!DOCTYPE html>
+<html>
+<meta lang="pl-PL">
 
-<form method="POST">
-    {% csrf_token %}
-    <p>
-        {{ form.username.label }}
-        {{ form.username }}
-    </p>
-    <p>
-        {{ form.password.label }}
-        {{ form.password }}
-    </p>
-    <button type="submit">Login</button>
-</form>
+<head>
+    <title>Panel logowania</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css/panels.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-{% endblock %}
+<body>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'landing' %}">Rezerweo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="background_logowanie">
+        <div class="tło">
+            <div class="opis">
+             <img src="{% static 'icons/iconfinder_8_avatar_2754583.png' %}">
+            </div>
+        </div>
+
+        <div class="panel">
+            <h1>Zaloguj się</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="formularz">
+                    {{ form.username }}
+                    <span></span>
+                    <label>Login</label>
+                </div>
+                <div class="formularz">
+                    {{ form.password }}
+                    <span></span>
+                    <label>Hasło</label>
+                </div>
+                <div class="zap_hasło">Nie pamiętasz hasła?</div>
+                {% if error %}
+                    <div class="zap_hasło">{{ error }}</div>
+                {% else %}
+                    <div class="zap_hasło">&nbsp;</div>
+                {% endif %}
+                <input type="submit" value="Zaloguj" class="przycisk">
+            </form>
+        </div>
+    </div>
+
+    <footer></footer>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

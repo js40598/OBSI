@@ -9,45 +9,89 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from users.tasks import refresh_user_blockades
 from users.models import UserIncorrectLoginLimit
+from django.contrib.auth.password_validation import validate_password, ValidationError
+from django.core.validators import validate_email
+from backend.validators import *
 
 
 @login_required
 def createuser(request):
+    form = UserCreationForm()
     if not request.user.is_staff:
         return redirect('home')
     if request.method == 'GET':
-        return render(request, 'users/createuser.html', {'form': UserCreationForm()})
+        return render(request, 'users/createuser.html', {'form': form})
     else:
-        if request.POST['password1'] == request.POST['password2']:
+        PASSWORD_MESSAGE = 'Password must have 8-50 digits and contain digits, lowercase, uppercase and ' \
+                           'special characters'
+        user = User(
+            username=request.POST['username'],
+            password=request.POST['password1'],
+            email=request.POST['email'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['first_name'],
+        )
+        with transaction.atomic():
+            validators = [MaxLengthValidator(request.POST['password1'], 'Password'),
+                          MaxLengthValidator(user.username, 'Username'),
+                          MaxLengthValidator(user.email, 'Email'),
+                          MaxLengthValidator(user.first_name, 'First name'),
+                          MaxLengthValidator(user.last_name, 'Last name'),
+                          ]
+
+            for validator in validators:
+                if not validator.is_valid:
+                    return render(request, 'users/createuser.html', {'form': form,
+                                                                     'values': user,
+                                                                     'error': validator.message})
+
             try:
-                User.objects.get(email=request.POST['email'])
-                return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                 'error': "Email address is in use already"})
-            except ObjectDoesNotExist and MultipleObjectsReturned:
-                try:
-                    with transaction.atomic():
-                        user = User.objects.create_user(
-                            username=request.POST['username'],
-                            password=request.POST['password1'],
-                            email=request.POST['email'],
-                            first_name=request.POST['first_name'],
-                            last_name=request.POST['first_name'],
-                        )
-                        if 'is_lecturer' in request.POST:
-                            group = Group.objects.get(name='Lecturer')
-                        else:
-                            group = Group.objects.get(name='Student')
-                        group.user_set.add(user)
-                        blockade = UserIncorrectLoginLimit(user=user, counter=0, is_blocked=False, blockade_expire=None)
-                        blockade.save()
-                        user.save()
-                        return redirect('home')
-                except IntegrityError:
-                    return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                                     'error': "The username has already been taken"})
-        else:
-            return render(request, 'users/createuser.html', {'form': UserCreationForm(),
-                                                             'error': "Passwords didn't match"})
+                validate_email(request.POST['email'])
+            except ValidationError as err:
+                return render(request, 'users/createuser.html', {'form': form,
+                                                                 'values': user,
+                                                                 'error': err.messages[0]})
+
+            validators = [UniqueUsernameValidator(request.POST['username']),
+                          UniqueEmailValidator(request.POST['email']),
+                          PasswordContainDigitValidator(request.POST['password1'], message=PASSWORD_MESSAGE),
+                          PasswordContainSpecialCharacterValidator(request.POST['password1'], message=PASSWORD_MESSAGE),
+                          PasswordContainUppercaseValidator(request.POST['password1'], message=PASSWORD_MESSAGE),
+                          PasswordContainLowercaseValidator(request.POST['password1'], message=PASSWORD_MESSAGE),
+                          PasswordsMatchValidator(request.POST['password1'], request.POST['password2'])
+                          ]
+
+            for validator in validators:
+                if not validator.is_valid:
+                    return render(request, 'users/createuser.html', {'form': form,
+                                                                     'values': user,
+                                                                     'error': validator.message})
+
+            try:
+                validate_password(request.POST['password1'], user=user)
+            except ValidationError as err:
+                return render(request, 'users/createuser.html', {'form': form,
+                                                                 'values': user,
+                                                                 'error': err.messages[0]})
+
+            if 'is_lecturer' in request.POST:
+                group = Group.objects.get(name='Lecturer')
+            else:
+                group = Group.objects.get(name='Student')
+
+            user = User.objects.create_user(
+                username=request.POST['username'],
+                password=request.POST['password1'],
+                email=request.POST['email'],
+                first_name=request.POST['first_name'],
+                last_name=request.POST['first_name'],
+            )
+
+            group.user_set.add(user)
+            blockade = UserIncorrectLoginLimit(user=user, counter=0, is_blocked=False, blockade_expire=None)
+            blockade.save()
+            user.save()
+            return redirect('createuser')
 
 
 def loginuser(request):
