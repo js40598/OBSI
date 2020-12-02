@@ -4,6 +4,7 @@ from datetime import datetime
 import pytz
 
 
+# check if upcoming reservation dates are in future, if any of them are not, update it
 def update_reservation_status():
     res = Reservation.objects.all().filter(is_upcoming=True)
     utc = pytz.UTC

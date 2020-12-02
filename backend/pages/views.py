@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
+# landing page
 def landing(request):
     logout(request)
     return render(request, 'pages/landing.html')
@@ -27,6 +28,7 @@ def home(request):
 
 @login_required
 def search(request):
+    # get all available floors
     floor_choices = [floor.level for floor in Floor.objects.all().order_by('-level')]
     context = {
         'current_year': datetime.now().year,
@@ -41,6 +43,7 @@ def search(request):
         context['rooms'] = rooms
         return render(request, 'pages/search.html', context)
     else:
+        # filter search requirements
         if 'sign' in request.POST:
             if request.POST['sign']:
                 rooms = rooms.filter(sign=request.POST['sign'])

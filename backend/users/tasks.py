@@ -4,6 +4,7 @@ from users.models import UserIncorrectLoginLimit
 from datetime import datetime
 
 
+# check if any blockade expired, then update it
 def refresh_user_blockades():
     for blockade in UserIncorrectLoginLimit.objects.filter(blockade_expire__lte=datetime.now()):
         with transaction.atomic():

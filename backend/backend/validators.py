@@ -6,6 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+# checks if provided username is not in use already
 class UniqueUsernameValidator:
     def __init__(self, value, klass=User, message=None):
         self.klass = klass
@@ -24,6 +25,7 @@ class UniqueUsernameValidator:
             return False
 
 
+# checks if length of provided value is correct
 class LengthValidator:
     def __init__(self, value, min_length=6, max_length=50, message=None):
         self.value = value
@@ -39,6 +41,7 @@ class LengthValidator:
             return True
 
 
+# checks if provided email is not in use already
 class UniqueEmailValidator:
     def __init__(self, value, klass=User, message=None):
         self.klass = klass
@@ -57,6 +60,7 @@ class UniqueEmailValidator:
             return False
 
 
+# checks if provided value is not too long
 class MaxLengthValidator:
     def __init__(self, value, field, max_length=50, message=None):
         self.value = value
@@ -71,6 +75,7 @@ class MaxLengthValidator:
             return True
 
 
+# checks if provided passwords matches each other
 class PasswordsMatchValidator:
     def __init__(self, password1, password2, message=None):
         self.password1 = password1
@@ -85,21 +90,7 @@ class PasswordsMatchValidator:
             return False
 
 
-class LengthValidator:
-    def __init__(self, value, field, min_length=8, max_length=50, message=None):
-        self.value = value
-        self.min_length = min_length
-        self.max_length = max_length
-        self.message = message if message else f'{field} length must be between {min_length} and {max_length} digits'
-        self.is_valid = self.__validate()
-
-    def __validate(self):
-        if len(self.value) < int(self.min_length) or len(self.value) > int(self.max_length):
-            return False
-        else:
-            return True
-
-
+# checks if password contains special character
 class PasswordContainSpecialCharacterValidator:
     def __init__(self, value, message=None):
         self.value = value
@@ -113,6 +104,7 @@ class PasswordContainSpecialCharacterValidator:
         return False
 
 
+# checks if password contains digit
 class PasswordContainDigitValidator:
     def __init__(self, value, message=None):
         self.value = value
@@ -126,6 +118,7 @@ class PasswordContainDigitValidator:
         return False
 
 
+# checks if password contains uppercase character
 class PasswordContainUppercaseValidator:
     def __init__(self, value, message=None):
         self.value = value
@@ -139,6 +132,7 @@ class PasswordContainUppercaseValidator:
         return False
 
 
+# checks if password contains lowercase character
 class PasswordContainLowercaseValidator:
     def __init__(self, value, message=None):
         self.value = value
