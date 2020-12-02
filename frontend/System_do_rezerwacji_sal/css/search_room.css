@@ -6,23 +6,31 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    overflow: hidden;
 
 }
 
 body {
     width: 100%;
-    background-color: #dbdbdb;
+    background-color: #dfdfdf;
     font-family: 'Roboto';
     font-size: 16px;
 }
 
 a{
     text-decoration: none;
+    color: white;
 }
 
 .container {
     min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_2 {
+    min-height: auto;
     width: 100%;
     display: flex;
     align-items: center;
@@ -181,7 +189,7 @@ a{
 #wyszukiwarka .wyszukiwarka{
     height: 250px;
     width: 100%;
-    background-image: url(/frontend/System_do_rezerwacji_sal/images/image.jpg);
+    background-image: url(/images/image.jpg);
     background-position: center;
     background-size: cover;
 }
@@ -219,11 +227,11 @@ display: flex;
 justify-content:center;
 align-items:center;
 border-radius: 20px;
-border: 3px solid black;
+border: 4px solid rgb(95, 95, 95);
 }
 
 #wyszukiwarka form .panel1 select{
-    width: 27%;
+    width: 23%;
     height: 50px;
     font-size: 1.2rem;
     padding-left: 50px;
@@ -253,7 +261,7 @@ color: grey;
     width: 100%;
     height: 220px; 
     border-radius: 20px;
-    border: 2px solid black;
+    border: 3px solid rgb(95, 95, 95);
     z-index: 10;
 }
 
@@ -332,15 +340,143 @@ margin: 4px 10px 4px 0;
     justify-content: center;
 }
 
-#wyszukiwarka form button{
-    padding: 10px;
+#wyszukiwarka form .button{
+    padding: 15px 150px;
     font-size: 2rem;
     color:white;
     background-color: #59c496;
     border: none;
-    width: 50%;
+    width: 100%;
 margin-top: 40px;
 border-radius: 20px;
+}
+
+#wyszukiwarka form .button:hover{
+    background-color: #27835b;
+    color: whitesmoke;
+}
+
+
+#wyniki_wysz .wyniki_wysz {
+    margin-bottom: 100px;
+}
+
+#wyniki_wysz .wyniki_wysz .opis{
+    position: absolute;
+    top:110%;
+    left: 18%;
+    width: 70%;
+}
+
+#wyniki_wysz .wyniki_wysz .opis h1{
+    font-size: 2.7rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+#wyniki_wysz .wyniki_wysz .opis h2{
+    font-size: 1.3rem;
+    font-weight: 200;
+    padding-left: 10px;
+}
+
+#wyniki_wysz .wyniki_wysz .results{
+    width: 100%;
+    margin-top: 220px;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item{
+    background-color: #d3d3d3;
+    display: flex;
+    flex-direction: row;
+    width: 65%;
+    margin: 0 auto;
+    padding-left: 20px;
+    margin-bottom: 45px;
+    height: 250px;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item:hover{
+    background-color: #c4c4c4;
+    box-shadow: 0 0 11px rgba(3, 3, 3, 0.397);
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .img{
+    width:30%;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item img{
+width: 180px;
+margin-top: 40px;
+margin-left: 40px;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .opis_results{
+padding-top: 18px;
+width: 35%;
+}
+
+
+#wyniki_wysz .wyniki_wysz .results .item .opis_results h1{
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: rgb(29, 29, 29);
+
+    padding-top: 17px;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .opis_results h2{
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: rgb(48, 48, 48);
+    padding-left:3px;
+    padding-bottom: 30px;
+    padding-top: 2px;
+    border-bottom: 2px black solid;
+
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .opis_results h3{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(48, 48, 48);
+    padding-bottom: 5px;
+    padding-top: 30px;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .opis_results h4{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgb(48, 48, 48);
+}
+
+
+#wyniki_wysz .wyniki_wysz .results .item .rezerwuj_button{
+    width: 35%;
+
+
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .rezerwuj_button button{
+    padding:10px 25px;
+    font-size: 2rem;
+    background-color: #59c496;
+border: none;
+position: relative;
+top:67%;
+left:35%;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .rezerwuj_button button:hover{
+    background-color: #0ae988;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .rezerwuj_button button a{
+    color: white;
+}
+
+#wyniki_wysz .wyniki_wysz .results .item .rezerwuj_button button a:hover{
+    color: #303030;
 }
 
 /*Footer*/
