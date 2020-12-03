@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for notification in notifications %}
+    {{ notification.title }}
+    {{ notification.description }}
+{% endfor %}
+
+{% endblock %}

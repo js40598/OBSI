@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'reservation.apps.ReservationConfig',
     'rooms.apps.RoomsConfig',
     'users.apps.UsersConfig',
+    'notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [

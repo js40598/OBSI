@@ -10,6 +10,9 @@ from datetime import date, datetime, timedelta
 from reservation.models import Reservation
 from rooms.models import Room
 from django.db import transaction
+from communicator.models import Message
+from notifications.models import Notification
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required
@@ -101,6 +104,11 @@ def reservation_day(request, room_slug, year, month, day):
                                                       date=date(year, month, day),
                                                       time=request.POST['time'])
                         new_reservation.save()
+                        m = Message(user=request.user,
+                                    reservation=new_reservation,
+                                    content='User {} reserved this room!'
+                                            ''.format(request.user.username))
+                        m.save()
                         # show message
                         messages.success(request, 'Room reserved!')
                         return redirect('reservation_day', room_slug, year, month, day)
@@ -159,7 +167,41 @@ def reservation_day(request, room_slug, year, month, day):
                         if user_group == 'Staff':
                             if forced_reservation.user.groups.get().name in "Student Lecturer":
                                 forced_reservation.user = request.user
+                                m = Message(user=User.objects.get(username='chatbot'),
+                                            reservation=forced_reservation,
+                                            content='User {} forced reservation of this room!'
+                                                    ''.format(forced_reservation.user.username))
                                 forced_reservation.save()
+                                m.save()
+                                communicator_messages = Message.objects.filter(reservation=forced_reservation)
+                                users = set()
+                                for mess in communicator_messages:
+                                    users.add(mess.user)
+                                try:
+                                    users.remove(request.user)
+                                except KeyError:
+                                    pass
+                                n_description = 'New forced reservation in room {}, on reservation at {}.{}.{} at {}' \
+                                                ''.format(forced_reservation.room.sign,
+                                                          forced_reservation.day_slug,
+                                                          forced_reservation.month_slug,
+                                                          forced_reservation.year_slug,
+                                                          forced_reservation.time)
+                                for us in users:
+                                    try:
+                                        n = Notification.objects.get(user=us,
+                                                                     reservation=forced_reservation,
+                                                                     title='Forced reservation',
+                                                                     description=n_description)
+                                        n.is_viewed = False
+                                        n.datetime = datetime.now()
+                                    except ObjectDoesNotExist:
+                                        n = Notification(user=us,
+                                                         reservation=forced_reservation,
+                                                         title='Forced reservation',
+                                                         description=n_description,
+                                                         is_viewed=False)
+                                    n.save()
                                 messages.success(request, 'Reservation forced!')
                                 return redirect('reservation_day', room_slug, year, month, day)
                             else:
@@ -170,7 +212,41 @@ def reservation_day(request, room_slug, year, month, day):
                         elif user_group == 'Local Admin':
                             if forced_reservation.user.groups.get().name in "Student Lecturer Staff":
                                 forced_reservation.user = request.user
+                                m = Message(user=User.objects.get(username='chatbot'),
+                                            reservation=forced_reservation,
+                                            content='User {} forced reservation of this room!'
+                                                    ''.format(forced_reservation.user.username))
                                 forced_reservation.save()
+                                m.save()
+                                communicator_messages = Message.objects.filter(reservation=forced_reservation)
+                                users = set()
+                                for mess in communicator_messages:
+                                    users.add(mess.user)
+                                try:
+                                    users.remove(request.user)
+                                except KeyError:
+                                    pass
+                                n_description = 'New forced reservation in room {}, on reservation at {}.{}.{} at {}' \
+                                                ''.format(forced_reservation.room.sign,
+                                                          forced_reservation.day_slug,
+                                                          forced_reservation.month_slug,
+                                                          forced_reservation.year_slug,
+                                                          forced_reservation.time)
+                                for us in users:
+                                    try:
+                                        n = Notification.objects.get(user=us,
+                                                                     reservation=forced_reservation,
+                                                                     title='Forced reservation',
+                                                                     description=n_description)
+                                        n.is_viewed = False
+                                        n.datetime = datetime.now()
+                                    except ObjectDoesNotExist:
+                                        n = Notification(user=us,
+                                                         reservation=forced_reservation,
+                                                         title='Forced reservation',
+                                                         description=n_description,
+                                                         is_viewed=False)
+                                    n.save()
                                 messages.success(request, 'Reservation forced!')
                                 return redirect('reservation_day', room_slug, year, month, day)
                             else:
@@ -180,7 +256,41 @@ def reservation_day(request, room_slug, year, month, day):
                         # Admin group can force reservation on every group
                         elif user_group == 'Admin':
                             forced_reservation.user = request.user
+                            m = Message(user=User.objects.get(username='chatbot'),
+                                        reservation=forced_reservation,
+                                        content='User {} forced reservation of this room!'
+                                                ''.format(forced_reservation.user.username))
                             forced_reservation.save()
+                            m.save()
+                            communicator_messages = Message.objects.filter(reservation=forced_reservation)
+                            users = set()
+                            for mess in communicator_messages:
+                                users.add(mess.user)
+                            try:
+                                users.remove(request.user)
+                            except KeyError:
+                                pass
+                            n_description = 'New forced reservation in room {}, on reservation at {}.{}.{} at {}' \
+                                            ''.format(forced_reservation.room.sign,
+                                                      forced_reservation.day_slug,
+                                                      forced_reservation.month_slug,
+                                                      forced_reservation.year_slug,
+                                                      forced_reservation.time)
+                            for us in users:
+                                try:
+                                    n = Notification.objects.get(user=us,
+                                                                 reservation=forced_reservation,
+                                                                 title='Forced reservation',
+                                                                 description=n_description)
+                                    n.is_viewed = False
+                                    n.datetime = datetime.now()
+                                except ObjectDoesNotExist:
+                                    n = Notification(user=us,
+                                                     reservation=forced_reservation,
+                                                     title='Forced reservation',
+                                                     description=n_description,
+                                                     is_viewed=False)
+                                n.save()
                             messages.success(request, 'Reservation forced!')
                             return redirect('reservation_day', room_slug, year, month, day)
 
