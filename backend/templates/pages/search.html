@@ -3,45 +3,67 @@
 
 {% block content %}
     <h1>Search room</h1>
-
     <form method="POST">
         {% csrf_token %}
         <label for="sign">Room sign</label><br>
         <input type="text" name="sign" placeholder="Room sign"><br><br>
         <label for="date">Date</label><br>
-        <input type="date" name="date"><br><br>
+        <input type="date" name="date" value="{{ values.date }}"><br><br>
         <label for="time">Time</label><br>
         <select name="time">
-            <option selected></option>
+            <option></option>
             {% for key, value in time_choices %}
-                <option value="{{ key }}">{{ value }}</option>
+                <option value="{{ key }}"
+                    {% if key == values.time %}
+                        selected
+                    {% endif %}
+                >{{ value }}</option>
             {% endfor %}
         </select><br>
         {{ error }}<br>
         <label for="places">Number of places</label><br>
-        <input type="number" name="places"><br><br>
+        <input type="number" name="places" value="{{ values.places }}"><br><br>
         <label for="computers">Number of computers</label><br>
-        <input type="number" name="computers"><br><br>
+        <input type="number" name="computers" value="{{ values.computers }}"><br><br>
         <label for="floor">Floor</label><br>
         <select name="floor">
-            <option selected></option>
+            <option></option>
             {% for floor_choice in floor_choices %}
-                <option value="{{ floor_choice }}">{{ floor_choice }}</option>
+                <option value="{{ floor_choice }}"
+                    {% if floor_level == floor_choice %}
+                        selected
+                    {% endif %}
+                >{{ floor_choice }}</option>
             {% endfor %}
         </select><br><br>
         <label for="destination">Destination</label><br>
         <select name="destination">
-            <option selected></option>
+            <option></option>
             {% for key, value in destination_choices %}
-                <option value="{{ key }}">{{ value }}</option>
+                    <option value="{{ key }}"
+                        {% if key == values.destination %}
+                            selected
+                        {% endif %}
+                    >{{ value }}</option>
             {% endfor %}
         </select><br><br>
+        {{ values.projector }}
         <label for="projector">Projector</label><br>
-        <input type="checkbox" name="projector" value="projector" id="projector"><br><br>
+        <input type="checkbox" name="projector" value="projector" id="projector"
+            {% if values.projector %}
+                checked
+            {% endif %}
+        ><br><br>
         <label for="multimedia_board">Multimedia board</label><br>
-        <input type="checkbox" name="multimedia_board" value="multimedia_board"><br><br>
+        <input type="checkbox" name="multimedia_board" value="multimedia_board"
+            {% if values.projector %}
+                checked
+            {% endif %}><br><br>
         <label for="blackboard">Blackboard</label><br>
-        <input type="checkbox" name="blackboard" value="blackboard"><br><br>
+        <input type="checkbox" name="blackboard" value="blackboard"
+            {% if values.projector %}
+                checked
+            {% endif %}><br><br>
         <br>
         <button type="submit">Search</button>
     </form>
