@@ -8,21 +8,23 @@
     <a href="{% url 'communicator' n.reservation.room.room_slug n.reservation.year_slug n.reservation.month_slug n.reservation.day_slug n.reservation.time.0 n.reservation.reservation_slug %}">
         View reservation communicator
     </a>
-    <form method="POST" action="{% url 'search' %}">
-        {% csrf_token %}
-        <input type="text" name="sign" value="{{ n.reservation.room.sign }}" hidden>
-        <input type="date" name="date" value="{{ n.reservation.date.isoformat }}" hidden>
-        <input name="time" value="{{ n.reservation.time }}" hidden>
-        <input type="number" name="places" value="15" hidden>
-        <input type="number" name="computers" value="{{ n.reservation.room.number_of_computers }}" hidden>
-        <input name="floor" value="{{ n.reservation.room.floor.level }}" hidden>
-        <input name="destination" value="{{ n.reservation.room.destination }}" hidden>
-        <input name="projector" value="{{ n.reservation.room.projector }}" id="projector" hidden>
-        <input name="multimedia_board" value="{{ n.reservation.room.multimedia_board }}" hidden>
-        <input name="blackboard" value="{{ n.reservation.room.blackboard }}" hidden>
-        <br>
-        <button type="submit">Show similar reservation</button>
-    </form>
+    {% if n.title == 'Forced reservation' %}
+        <form method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+            <input type="text" name="sign" value="{{ n.reservation.room.sign }}" hidden>
+            <input type="date" name="date" value="{{ n.reservation.date.isoformat }}" hidden>
+            <input name="time" value="{{ n.reservation.time }}" hidden>
+            <input type="number" name="places" value="15" hidden>
+            <input type="number" name="computers" value="{{ n.reservation.room.number_of_computers }}" hidden>
+            <input name="floor" value="{{ n.reservation.room.floor.level }}" hidden>
+            <input name="destination" value="{{ n.reservation.room.destination }}" hidden>
+            <input name="projector" value="{{ n.reservation.room.projector }}" id="projector" hidden>
+            <input name="multimedia_board" value="{{ n.reservation.room.multimedia_board }}" hidden>
+            <input name="blackboard" value="{{ n.reservation.room.blackboard }}" hidden>
+            <br>
+            <button type="submit">Show similar reservation</button>
+        </form>
+    {% endif %}
     <br>
 {% endfor %}
 
