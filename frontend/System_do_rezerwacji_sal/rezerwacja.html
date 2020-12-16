@@ -23,32 +23,150 @@
                         <div class="bar"></div>
                     </div>
                     <ul>
-                        <li><a href="komunikator.html" opis-po="Sale">Pomoc</a></li>
-                        <li><a href="sale.html" opis-po="Home">Zarezerwuj</a></li>
+                        <li>
+                            <a href="search_room.html" opis-po="Home">Zarezerwuj</a>
+                        </li>
+                        <li>
+                            <a href="notyfikacje.html"><span>Powiadomienia</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="rezerwacja">
-        <div class="rezerwacja container">
+    <section id="first">
+        <div class="first container">
             <div class="opis">
-                <div>
-                    <img src="">
+                <div class="opis_1">
+                    <h1>Sala 011</h1>
+                    <h2>Piętro 0</h2>
+                    <h2>Budynek WI1</h2>
+                    <h2>Adres: ul.Żołnierska 49 | Szczecin</h2>
                 </div>
-                <div>
-                    <h1></h1>
-                    <h2></h2>
+                <div class="opis_2">
+                    <h3><strong> Rodzaj sali:</strong> Sala audytoryjna</h3>
+                    <h3><strong> Ilość miejsc:</strong>  40-80 miejsc</h3>
+                    <h3><strong> Ilość komputerów:</strong>  1</h3><br></br>
+                </div>
+                <div class="opis_3">
+                    <h4><strong> Dodatkowe mozliowości:</strong> <br>Tablica multimedialna</br>Projektor</h4>
                 </div>
             </div>
-            <div class="kalendarz">
+            <div class="calendar">
+<img src="images/Zrzut ekranu 2020-12-16 o 04.31.47.png">
+            </div>
+        
+        </div>
+    </section>
 
+    <section id="second">
+        <div class="second container">
+            <table>
+                <tr>
+                    <th>Pozycja</th>
+                    <th>Godzina</th>
+                    <th>Zerezerował/a</th>
+                    <th class="komunikator">Komunikator</th>
+                    <th class="zarzadzaj">Zarządzaj</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>8-10</td>
+                    <td></td>
+                    <td class="komunikator"></td>
+                    <td><button class="zarezerwuj">Zarezerwuj</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>10-12</td>
+                    <td></td>
+                    <td class="komunikator"></td>
+                    <td><button class="zarezerwuj">Zarezerwuj</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>12-14</td>
+                    <td></td>
+                    <td class="komunikator"></td>
+                    <td><button class="zarezerwuj">Zarezerwuj</button></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>14-16</td>
+                    <td>Student</td>
+                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td>
+                        <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>16-18</td>
+                    <td>Pracownik ZUT</td>
+                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td>
+                        <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>18-20</td>
+                    <td>Wykładowca</td>
+                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td>
+                        <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <section id="komunikator">
+        <div class="komunikator container">
+            <div class="box_komunikatora">
+                <div class="label">
+                    <img src="icons/global.png">
+                    <div class="kolumna">
+                        <h1>Sala 011</h1>
+                        <h2>Godzina 14-16</h2>
+                    </div>
+                </div>
+                <form>
+                    <textarea readonly></textarea>
+                    <div class="wiadomosc">
+                        <input placeholder="Napisz wiadomość...">
+                        <button type="submit" class="przycisk"><img src="icons/send-mail.png"></button>
+                        
+                    </div>
+                </form>
             </div>
         </div>
-
-
     </section>
+    <footer>
+        <div class="footer container">
+            <div class="firma">Rezerweo</div>
+            <div class="social-media">
+                <div class="social-ikona">
+                    <a href="www.facebook.com">
+                        <img src="icons/facebook-like-5-48.png" alt="Rezerweo Facebook">
+                    </a>
+                </div>
+
+                <div class="social-ikona">
+                    <a href="www.instagram.com">
+                        <img src="icons/instagram-5-48.png" alt="Rezerweo Instagram">
+                    </a>
+                </div>
+                <div class="social-ikona">
+                    <a href="www.twitter.com">
+                        <img src="icons/twitter-5-48.png" alt="Rezerweo Twitter">
+                    </a>
+                </div>
+            </div>
+            <p>2020 Rezerweo. Wszelkie prawa zastrzezone</p>
+        </div>
+    </footer>
 
     <script src="./app.js"></script>
 </body>

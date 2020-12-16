@@ -19,17 +19,13 @@ a {
     text-decoration: none;
 }
 
-#header ul .powiadomienia {
-    color: red;
-
-}
-
 .container {
-    min-height: 80vh;
+    min-height: auto;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 60px;
 }
 
 /*Sekcja header*/
@@ -102,17 +98,11 @@ a {
     display: block;
 }
 
-
-#header .lista-nawigacji ul a span {
-    color: red;
-}
-
 #header .lista-nawigacji ul a:hover {
     border-color: #59c496;
     color: #59c496;
     transition: ease-in .35s;
 }
-
 
 #header .lista-nawigacji ul a::after {
     content: attr(opis-po);
@@ -185,238 +175,110 @@ a {
     bottom: 0;
 }
 
-/*first*/
 
-#first .first {
+#header .icon-button {
+    position: relative;
     display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    background-color: #eeeeee;
-    width: 90%;
-    position: relative;
-    top: 100px;
-    box-shadow: 0 0 10px rgba(3, 3, 3, 0.397);
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
 }
 
-#first .first .opis {
-    width: 50%;
-    float: left;
-    height: 600px;
-    padding-left: 40px;
-    position: relative;
-    top: 10px;
+/*Notyfikacje*/
+
+#notifications .notifications {
+    display: flex;
+    flex-direction: column;
+}
+
+#notifications .notifications .notifications_bar {
+position: relative;
+top:50px;
+    width: 100%;
+    height: 60px;
+    background-color: #3f3f3f;
+    margin-bottom: 60px;
 
 }
 
-#first .opis .opis_1 {
-    margin-top: 40px;
-    margin-bottom: 80px;
-    border-bottom: 2px #59c496 solid;
-    padding-bottom: 20px;
-    width: 80%;
-
-
-}
-
-#first .opis .opis_1 h1 {
-    font-size: 3rem;
-    font-weight: 400;
-}
-
-#first .opis .opis_1 h2 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    line-height: 2.2rem;
-    padding-left: 2px;
-}
-
-#first .opis .opis_2 h3 {
-    font-size: 1.3rem;
-    font-weight: 300;
-    line-height: 1.8rem;
-}
-
-#first .opis .opis_3 h4 {
-    font-size: 1.3rem;
-    font-weight: 300;
-    line-height: 1.8rem;
-    margin-top: 20px;
-}
-
-#first .calendar {
-    width: 50%;
+#notifications .notifications .notifications_bar h1 {
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-#first .calendar img {
-    width: 70%;
-}
-
-
-/*second*/
-
-#second .second {
-    margin-top: 60px;
-    background-color: #d3d3d3;
-
-}
-
-#second table {
-    width: 90%;
-    background-color: #eeeeee;
-    box-shadow: 0 0 10px rgba(3, 3, 3, 0.397);
-}
-
-
-
-
-#second table th {
-    width: 10%;
-    padding-bottom: 15px;
-    padding-top: 10px;
-    font-size: 1.5rem;
-    border-bottom: 1px solid black;
-    border-left: none;
-    border-right: none;
-}
-
-#second table td {
-    text-align: center;
-    padding-top: 10px;
-}
-
-
-#second table .komunikator img {
-    width: 15%;
-}
-
-#second table th .zarzadzaj {
-    width: 30%;
-}
-
-
-#second table .zarezerwuj {
-    margin-right: 10px;
-    font-size: 1rem;
-    padding: 8px;
-    border: #59c496;
-    background-color: #59c496;
-    color: #eeeeee;
-}
-
-#second table button {
-    margin-right: 10px;
-    font-size: 1rem;
-    padding: 8px;
-    border: #59c496;
-    background-color: #eeeeee;
+    position: relative;
+    top: 10px;
+    font-size: 2rem;
     color: #59c496;
 
 }
 
-
-#second table .przyciski {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+#notifications .notifications .notifications_box {
+    width: 65%;
 }
 
-/*Komunikator*/
-
-
-
-#komunikator .komunikator .box_komunikatora{
-    width: 400px;
-    height:450px;
-    position: absolute;
-    top: 350%;
-    left: 73%;
-    transform: translate(-73%, -350%);
-    border-radius: 30px;
-    box-shadow: 0px 0px 40px #202020;
-    display: flex;
-    flex-direction: column;
-    background-image: linear-gradient(to top right, rgb(56, 85, 250), rgb(2, 186, 199));
-}
-
-#komunikator .box_komunikatora .label{
-    width: 100%;
-    background-image: linear-gradient(to bottom right, rgb(56, 85, 250), rgb(2, 186, 199));
-    border: none;
-    border-radius:30px 30px 0 0;
-    height: 70px;
-    padding-left: 30px;
+#notifications .notifications .notifications_box .item {
     display: flex;
     flex-direction: row;
+    margin-top: 20px;
+    background-color: #ececec;
+    height: auto;
+    box-shadow: 0 0 7px rgba(3, 3, 3, 0.397);
+
+}
+
+#notifications .notifications .notifications_box .item h2, 
+#notifications .notifications .notifications_box .item h3,
+#notifications .notifications .notifications_box .item h4{
+    padding:5px 20px;
+}
+
+#notifications .notifications .notifications_box .item .tekst{
+    width: 70%;
+    padding:10px 0;
+}
+
+#notifications .notifications .notifications_box .item .tekst h2{
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #181818;
+}
+
+#notifications .notifications .notifications_box .item .tekst h3{
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #525252;
+    width: 80%;
+    line-height: 1.7rem;
+}
+
+#notifications .notifications .notifications_box .item .tekst h4{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #8a8a8a;
+}
+
+#notifications .notifications .notifications_box .item .buttons {
+    display: flex;
     align-items: center;
+    justify-content: center;
+
 }
 
-#komunikator .box_komunikatora .label h1{
-padding-left: 15px;
-color: white;
-font-weight: 500;
-font-size: 1.4rem;
-padding-top: 3px;
+#notifications .notifications .notifications_box .item .buttons button {
+    font-size: 1.2rem;
+    padding:10px;
+    border: 2px solid #59c496;
+    color: #59c496;
 }
 
-#komunikator .box_komunikatora .label h2{
-    padding-left: 15px;
-    color: rgb(196, 193, 193);
-    font-weight: 500;
-    font-size: 1rem;
-    }
-
-#komunikator .box_komunikatora .label img{
-   width: 45px;
-   height: 45px;
-    }
-
-#komunikator .box_komunikatora textarea{
-    width: 100%;
-    height: 290px;
-    background-color: whitesmoke;
-}
-
-
-#komunikator .box_komunikatora input{
-    width: 75%;
-    height: 55px;
-    border-radius:30px;
-    border: none;
-font-size: 1.1rem;
-padding: 25px 0px 25px 20px ;
-position: relative;
-left: 20px;
-}
-
-
-#komunikator .box_komunikatora .wiadomosc{
-    display: flex;
-flex-direction: row;
-align-items: center;
-position: relative;
-top:12px;
-}
-
-
-#komunikator .box_komunikatora .wiadomosc button{
-    position: relative;
-    left:35px;
-    width: 50px;
-    height: 50px;
-    border: none;
-    background-color: transparent;
-}
-
-#komunikator .box_komunikatora .wiadomosc button img{
-    width: 35px;
-    filter: brightness(0.9);
-}
-
-#komunikator .box_komunikatora .wiadomosc button img:hover{
-filter: brightness(1);
+#notifications .notifications .notifications_box .item .buttons button:hover{
+    background-color: #59c496;
+    color: #ffffff;
 }
 
 /*Footer*/
