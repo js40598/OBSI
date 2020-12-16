@@ -17,6 +17,7 @@ from backend.validators import *
 @login_required
 def createuser(request):
     form = UserCreationForm()
+    # check user permission
     if not request.user.is_staff:
         return redirect('home')
     if request.method == 'GET':
@@ -24,6 +25,7 @@ def createuser(request):
     else:
         PASSWORD_MESSAGE = 'Password must have 8-50 digits and contain digits, lowercase, uppercase and ' \
                            'special characters'
+        # create user model with provided data to work on it
         user = User(
             username=request.POST['username'],
             password=request.POST['password1'],
@@ -32,6 +34,7 @@ def createuser(request):
             last_name=request.POST['first_name'],
         )
         with transaction.atomic():
+            # validate length of each value to prevent overflow of database
             validators = [MaxLengthValidator(request.POST['password1'], 'Password'),
                           MaxLengthValidator(user.username, 'Username'),
                           MaxLengthValidator(user.email, 'Email'),
@@ -45,6 +48,7 @@ def createuser(request):
                                                                      'values': user,
                                                                      'error': validator.message})
 
+            # validate email
             try:
                 validate_email(request.POST['email'])
             except ValidationError as err:
@@ -52,6 +56,7 @@ def createuser(request):
                                                                  'values': user,
                                                                  'error': err.messages[0]})
 
+            # validate restrictions
             validators = [UniqueUsernameValidator(request.POST['username']),
                           UniqueEmailValidator(request.POST['email']),
                           PasswordContainDigitValidator(request.POST['password1'], message=PASSWORD_MESSAGE),
@@ -66,7 +71,7 @@ def createuser(request):
                     return render(request, 'users/createuser.html', {'form': form,
                                                                      'values': user,
                                                                      'error': validator.message})
-
+            # validate with Django builtin validators
             try:
                 validate_password(request.POST['password1'], user=user)
             except ValidationError as err:
@@ -74,11 +79,13 @@ def createuser(request):
                                                                  'values': user,
                                                                  'error': err.messages[0]})
 
+            # get selected group
             if 'is_lecturer' in request.POST:
                 group = Group.objects.get(name='Lecturer')
             else:
                 group = Group.objects.get(name='Student')
 
+            # save user model in database
             user = User.objects.create_user(
                 username=request.POST['username'],
                 password=request.POST['password1'],
@@ -87,7 +94,9 @@ def createuser(request):
                 last_name=request.POST['first_name'],
             )
 
+            # add user to selected group
             group.user_set.add(user)
+            # create user blockade model and save it to database
             blockade = UserIncorrectLoginLimit(user=user, counter=0, is_blocked=False, blockade_expire=None)
             blockade.save()
             user.save()

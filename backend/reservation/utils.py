@@ -1,6 +1,7 @@
 from datetime import datetime
 
 
+# generate reservation instance slugs
 def reservation_slug_generator(sender, instance, *args, **kwargs):
     instance.reservation_slug = '{}_{}_{}'.format(instance.room.sign, str(instance.date), str(instance.time))
     instance.year_slug = '{}'.format(instance.date.year)
@@ -8,6 +9,7 @@ def reservation_slug_generator(sender, instance, *args, **kwargs):
     instance.day_slug = '{}'.format(instance.date.day)
 
 
+# generate reservation begin datetime
 def reservation_datetime_generator(sender, instance, *args, **kwargs):
     TIME_DICTIONARY = {
         '1': '08 00 00',
@@ -23,6 +25,7 @@ def reservation_datetime_generator(sender, instance, *args, **kwargs):
     ).strftime('%Y-%m-%d %H:%M:%S')
 
 
+# generate reservation status
 def reservation_is_upcoming_generator(sender, instance, *args, **kwargs):
     if datetime.strptime(instance.datetime_begin, '%Y-%m-%d %H:%M:%S') > datetime.now():
         instance.is_upcoming = True

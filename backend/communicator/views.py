@@ -25,7 +25,3 @@ def communicator(request, room_slug, year, month, day, time, room_name):
         'current_year': datetime.now().year,
     }
     return render(request, 'communicator/communicator.html', context)
-
-
-def messageajax(request, room_slug, year, month, day, time, room_name):
-    return HttpResponse(request.POST['text'])
