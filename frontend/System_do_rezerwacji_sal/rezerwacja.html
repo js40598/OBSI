@@ -47,17 +47,17 @@
                 </div>
                 <div class="opis_2">
                     <h3><strong> Rodzaj sali:</strong> Sala audytoryjna</h3>
-                    <h3><strong> Ilość miejsc:</strong>  40-80 miejsc</h3>
-                    <h3><strong> Ilość komputerów:</strong>  1</h3><br></br>
+                    <h3><strong> Ilość miejsc:</strong> 40-80 miejsc</h3>
+                    <h3><strong> Ilość komputerów:</strong> 1</h3><br></br>
                 </div>
                 <div class="opis_3">
                     <h4><strong> Dodatkowe mozliowości:</strong> <br>Tablica multimedialna</br>Projektor</h4>
                 </div>
             </div>
             <div class="calendar">
-<img src="images/Zrzut ekranu 2020-12-16 o 04.31.47.png">
+                <img src="images/Zrzut ekranu 2020-12-16 o 04.31.47.png">
             </div>
-        
+
         </div>
     </section>
 
@@ -96,7 +96,8 @@
                     <td>4</td>
                     <td>14-16</td>
                     <td>Student</td>
-                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td class="komunikator"><button class="open-button" onclick="openForm()"><img
+                                src="icons/messenger.png"></button></td>
                     <td>
                         <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
                     </td>
@@ -105,7 +106,8 @@
                     <td>5</td>
                     <td>16-18</td>
                     <td>Pracownik ZUT</td>
-                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td class="komunikator"><button class="open-button" onclick="openForm()"><img
+                                src="icons/messenger.png"></button></td>
                     <td>
                         <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
                     </td>
@@ -114,7 +116,8 @@
                     <td>6</td>
                     <td>18-20</td>
                     <td>Wykładowca</td>
-                    <td class="komunikator"><img src="icons/messenger.png"></td>
+                    <td class="komunikator"><button class="open-button" onclick="openForm()"><img
+                                src="icons/messenger.png"></button></td>
                     <td>
                         <div class="przyciski"><button>Usuń rezerwację</button><button>Wymuś rezerwację</button></div>
                     </td>
@@ -122,26 +125,31 @@
             </table>
         </div>
     </section>
-    <section id="komunikator">
-        <div class="komunikator container">
-            <div class="box_komunikatora">
+
+    <div class="chat container" id=myForm>
+        <div class="box_komunikatora">
+            <form action="">
                 <div class="label">
                     <img src="icons/global.png">
                     <div class="kolumna">
                         <h1>Sala 011</h1>
                         <h2>Godzina 14-16</h2>
                     </div>
-                </div>
-                <form>
-                    <textarea readonly></textarea>
-                    <div class="wiadomosc">
-                        <input placeholder="Napisz wiadomość...">
-                        <button type="submit" class="przycisk"><img src="icons/send-mail.png"></button>
-                        
+                    <div>
+                        <button type="button" class="close-button" onclick="closeForm()"><img
+                                src="icons/close.png"></button>
                     </div>
-                </form>
-            </div>
+                </div>
+                <textarea readonly></textarea>
+                <div class="wiadomosc">
+                    <input placeholder="Napisz wiadomość...">
+                    <button type="submit" class="przycisk"><img src="icons/send-mail.png"></button>
+                </div>
+            </form>
         </div>
+    </div>
+    <section>
+        <button type="button" class="close-button" onclick="openForm()">close</button>
     </section>
     <footer>
         <div class="footer container">
@@ -168,7 +176,53 @@
         </div>
     </footer>
 
-    <script src="./app.js"></script>
+    <script>
+        function openForm(){
+    document.getElementById("myForm").style.display = "block";  
+}
+function closeForm(){
+    document.getElementById("myForm").style.display = "none";
+}
+    </script>
+
+<script type="text/javascript">
+    YUI().use('calendar', 'datatype-date', 'cssbutton',  function(Y) {
+    
+        
+        var calendar = new Y.Calendar({
+          contentBox: "#mycalendar",
+          width:'340px',
+          showPrevMonth: true,
+          showNextMonth: true,
+          date: new Date()}).render();
+    
+        
+        var dtdate = Y.DataType.Date;
+    
+       
+        calendar.on("selectionChange", function (ev) {
+    
+          
+          var newDate = ev.newSelection[0];
+    
+         
+          Y.one("#selecteddate").setHTML(dtdate.format(newDate));
+        });
+    
+    
+       
+        Y.one("#togglePrevMonth").on('click', function (ev) {
+          ev.preventDefault();
+          calendar.set('showPrevMonth', !(calendar.get("showPrevMonth")));
+        });
+    
+       
+        Y.one("#toggleNextMonth").on('click', function (ev) {
+          ev.preventDefault();
+          calendar.set('showNextMonth', !(calendar.get("showNextMonth")));
+        });
+    });
+    </script>
 </body>
 
 </html>

@@ -19,6 +19,8 @@ a {
     text-decoration: none;
 }
 
+
+
 #header ul .powiadomienia {
     color: red;
 
@@ -187,6 +189,8 @@ a {
 
 /*first*/
 
+
+
 #first .first {
     display: flex;
     flex-direction: row;
@@ -288,6 +292,7 @@ a {
 }
 
 
+
 #second table .komunikator img {
     width: 15%;
 }
@@ -325,15 +330,26 @@ a {
 
 /*Komunikator*/
 
+.chat {
+    display:none ;
+}
+
+.chat .close-button {
+    margin-left: 140px;
+    margin-top: 11px;
+    background: transparent;
+    border: none;
+    
+}
 
 
-#komunikator .komunikator .box_komunikatora{
+
+.chat .box_komunikatora {
     width: 400px;
-    height:450px;
+    height: 450px;
     position: absolute;
-    top: 350%;
-    left: 73%;
-    transform: translate(-73%, -350%);
+    top: 100%;
+    left: 70%;
     border-radius: 30px;
     box-shadow: 0px 0px 40px #202020;
     display: flex;
@@ -341,11 +357,11 @@ a {
     background-image: linear-gradient(to top right, rgb(56, 85, 250), rgb(2, 186, 199));
 }
 
-#komunikator .box_komunikatora .label{
+.chat .box_komunikatora .label {
     width: 100%;
     background-image: linear-gradient(to bottom right, rgb(56, 85, 250), rgb(2, 186, 199));
     border: none;
-    border-radius:30px 30px 0 0;
+    border-radius: 30px 30px 0 0;
     height: 70px;
     padding-left: 30px;
     display: flex;
@@ -353,70 +369,71 @@ a {
     align-items: center;
 }
 
-#komunikator .box_komunikatora .label h1{
-padding-left: 15px;
-color: white;
-font-weight: 500;
-font-size: 1.4rem;
-padding-top: 3px;
+.chat .box_komunikatora .label h1 {
+    padding-left: 15px;
+    color: white;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding-top: 3px;
 }
 
-#komunikator .box_komunikatora .label h2{
+.chat .box_komunikatora .label h2 {
     padding-left: 15px;
     color: rgb(196, 193, 193);
     font-weight: 500;
     font-size: 1rem;
-    }
+}
 
-#komunikator .box_komunikatora .label img{
-   width: 45px;
-   height: 45px;
-    }
+.chat .box_komunikatora .label img {
+    width: 45px;
+    height: 45px;
+}
 
-#komunikator .box_komunikatora textarea{
+.chat .box_komunikatora textarea {
     width: 100%;
     height: 290px;
     background-color: whitesmoke;
 }
 
 
-#komunikator .box_komunikatora input{
+.chat .box_komunikatora input {
     width: 75%;
     height: 55px;
-    border-radius:30px;
+    border-radius: 30px;
     border: none;
-font-size: 1.1rem;
-padding: 25px 0px 25px 20px ;
-position: relative;
-left: 20px;
-}
-
-
-#komunikator .box_komunikatora .wiadomosc{
-    display: flex;
-flex-direction: row;
-align-items: center;
-position: relative;
-top:12px;
-}
-
-
-#komunikator .box_komunikatora .wiadomosc button{
+    font-size: 1.1rem;
+    padding: 25px 0px 25px 20px;
     position: relative;
-    left:35px;
+    left: 20px;
+}
+
+
+.chat .box_komunikatora .wiadomosc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    top: 12px;
+
+}
+
+
+.chat .box_komunikatora .wiadomosc button {
+    position: relative;
+    left: 35px;
     width: 50px;
     height: 50px;
     border: none;
     background-color: transparent;
 }
 
-#komunikator .box_komunikatora .wiadomosc button img{
+.chat .box_komunikatora .wiadomosc button img {
     width: 35px;
     filter: brightness(0.9);
 }
 
-#komunikator .box_komunikatora .wiadomosc button img:hover{
-filter: brightness(1);
+.chat .box_komunikatora .wiadomosc button img:hover {
+    filter: brightness(1);
 }
 
 /*Footer*/
