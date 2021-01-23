@@ -1,31 +1,83 @@
 {% extends 'base.html' %}
 
-{% block content %}
-{% for n in notifications %}
-    {{ n.title }}
-    {{ n.description }}
-    {{ n.datetime }}
-    <a href="{% url 'communicator' n.reservation.room.room_slug n.reservation.year_slug n.reservation.month_slug n.reservation.day_slug n.reservation.time.0 n.reservation.reservation_slug %}">
-        View reservation communicator
-    </a>
-    {% if n.title == 'Forced reservation' %}
-        <form method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-            <input type="text" name="sign" value="{{ n.reservation.room.sign }}" hidden>
-            <input type="date" name="date" value="{{ n.reservation.date.isoformat }}" hidden>
-            <input name="time" value="{{ n.reservation.time }}" hidden>
-            <input type="number" name="places" value="15" hidden>
-            <input type="number" name="computers" value="{{ n.reservation.room.number_of_computers }}" hidden>
-            <input name="floor" value="{{ n.reservation.room.floor.level }}" hidden>
-            <input name="destination" value="{{ n.reservation.room.destination }}" hidden>
-            <input name="projector" value="{{ n.reservation.room.projector }}" id="projector" hidden>
-            <input name="multimedia_board" value="{{ n.reservation.room.multimedia_board }}" hidden>
-            <input name="blackboard" value="{{ n.reservation.room.blackboard }}" hidden>
-            <br>
-            <button type="submit">Show similar reservation</button>
-        </form>
-    {% endif %}
-    <br>
-{% endfor %}
 
+{% load static %}
+
+
+{% block title %}Rezerwacja sal na wydziale informatyki ZUT{% endblock %}
+
+
+{% block style %}{% static 'css/notifications.css' %}{% endblock %}
+
+
+{% block content %}
+
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'search' %}" opis-po="Home">Zarezerwuj</a></li>
+                        <li><a href="{% url 'notifications' %}" opis-po="Sale" style="color: red;">Powiadomienia</a></li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="notifications">
+        <div class="notifications container">
+            <div class="notifications_bar">
+            </div>
+            <div class="notifications_box">
+                {% for n in notifications %}
+                    <div class="item">
+                        <div class="tekst">
+                            <h2>{{ n.title }}</h2>
+                            <h3>{{ n.description }}</h3>
+                            <h4>{{ n.datetime }}</h4>
+                        </div>
+                        {% if n.title == 'Forced reservation' %}
+                            <form method="POST" action="{% url 'search' %}">
+                                {% csrf_token %}
+                                <input type="text" name="sign" value="{{ n.reservation.room.sign }}" hidden>
+                                <input type="date" name="date" value="{{ n.reservation.date.isoformat }}" hidden>
+                                <input name="time" value="{{ n.reservation.time }}" hidden>
+                                <input type="number" name="places" value="15" hidden>
+                                <input type="number" name="computers" value="{{ n.reservation.room.number_of_computers }}" hidden>
+                                <input name="floor" value="{{ n.reservation.room.floor.level }}" hidden>
+                                <input name="destination" value="{{ n.reservation.room.destination }}" hidden>
+                                <input name="projector" value="{{ n.reservation.room.projector }}" id="projector" hidden>
+                                <input name="multimedia_board" value="{{ n.reservation.room.multimedia_board }}" hidden>
+                                <input name="blackboard" value="{{ n.reservation.room.blackboard }}" hidden>
+                                <br>
+                                <br>
+                                <div class="buttons">
+                                    <button type="submit">Wyszukaj podobne sale</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="buttons">
+                                <a href="{% url 'communicator' n.reservation.room.room_slug n.reservation.year_slug n.reservation.month_slug n.reservation.day_slug n.reservation.time.0 n.reservation.reservation_slug %}">
+                                    <button type="submit">Pokaż komunikator rezerwacji</button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

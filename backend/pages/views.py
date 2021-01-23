@@ -44,7 +44,6 @@ def search(request):
         return render(request, 'pages/search.html', context)
     else:
         context['values'] = request.POST
-        context['floor_level'] = int(request.POST['floor'])
         # filter search requirements
         if 'sign' in request.POST:
             if request.POST['sign']:

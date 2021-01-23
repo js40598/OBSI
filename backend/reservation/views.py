@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name
+
+from django.utils.datastructures import MultiValueDictKeyError
+
 from reservation.calendar import Calendar
 from datetime import date, datetime, timedelta
 from reservation.models import Reservation
@@ -17,8 +20,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def reservation_year(request, room_slug, curr_year):
+    if request.method == 'POST':
+        date = request.POST['date_input']
+        return redirect('reservation_day', room_slug, date[0:4], date[5:7], date[8::])
     # Pagination
+    current_room = Room.objects.get(room_slug=room_slug)
     current_year = datetime.now().year
+    current_month = datetime.now().month if datetime.now().month > 10 else '0' + str(datetime.now().month)
     paginator_years = [current_year-1, current_year, current_year+1]
     paginator = Paginator(paginator_years, 1)
     year = request.GET.get('year')
@@ -29,10 +37,14 @@ def reservation_year(request, room_slug, curr_year):
     # Display
     calendar = [[Calendar().itermonthdays4(curr_year, i), i, month_name[i]] for i in range(1, 13)]
     context = {
+        'current_room': current_room,
         'room_slug': room_slug,
         'curr_year': curr_year,
+        'curr'
         'dates': Calendar(),
         'current_year': current_year,
+        'current_month': current_month,
+        'current_day': datetime.now().day,
         'paged_year': paged_year,
         'paginator_years': paginator_years,
         'year': int(year),

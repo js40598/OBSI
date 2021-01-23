@@ -1,87 +1,214 @@
 {% extends 'base.html' %}
 
 
+{% load static %}
+
+
+{% block title %}System rezerwacji sal{% endblock %}
+
+
+{% block style %}{% static 'css/search_room.css' %}{% endblock %}
+
+{% block script %}
+    <script src="https://kit.fontawesome.com/db53f27c17.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+
 {% block content %}
-    <h1>Search room</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="sign">Room sign</label><br>
-        <input type="text" name="sign" placeholder="Room sign"><br><br>
-        <label for="date">Date</label><br>
-        <input type="date" name="date" value="{{ values.date }}"><br><br>
-        <label for="time">Time</label><br>
-        <select name="time">
-            <option></option>
-            {% for key, value in time_choices %}
-                <option value="{{ key }}"
-                    {% if key == values.time %}
-                        selected
-                    {% endif %}
-                >{{ value }}</option>
-            {% endfor %}
-        </select><br>
-        {{ error }}<br>
-        <label for="places">Number of places</label><br>
-        <input type="number" name="places" value="{{ values.places }}"><br><br>
-        <label for="computers">Number of computers</label><br>
-        <input type="number" name="computers" value="{{ values.computers }}"><br><br>
-        <label for="floor">Floor</label><br>
-        <select name="floor">
-            <option></option>
-            {% for floor_choice in floor_choices %}
-                <option value="{{ floor_choice }}"
-                    {% if floor_level == floor_choice %}
-                        selected
-                    {% endif %}
-                >{{ floor_choice }}</option>
-            {% endfor %}
-        </select><br><br>
-        <label for="destination">Destination</label><br>
-        <select name="destination">
-            <option></option>
-            {% for key, value in destination_choices %}
-                    <option value="{{ key }}"
-                        {% if key == values.destination %}
-                            selected
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'search' %}" opis-po="Home" style="color: red;">Zarezerwuj</a></li>
+                        <li><a href="{% url 'notifications' %}" opis-po="Sale">Powiadomienia</a></li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
                         {% endif %}
-                    >{{ value }}</option>
-            {% endfor %}
-        </select><br><br>
-        {{ values.projector }}
-        <label for="projector">Projector</label><br>
-        <input type="checkbox" name="projector" value="projector" id="projector"
-            {% if values.projector %}
-                checked
-            {% endif %}
-        ><br><br>
-        <label for="multimedia_board">Multimedia board</label><br>
-        <input type="checkbox" name="multimedia_board" value="multimedia_board"
-            {% if values.projector %}
-                checked
-            {% endif %}><br><br>
-        <label for="blackboard">Blackboard</label><br>
-        <input type="checkbox" name="blackboard" value="blackboard"
-            {% if values.projector %}
-                checked
-            {% endif %}><br><br>
-        <br>
-        <button type="submit">Search</button>
-    </form>
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    {% if exact_date %}
-        {% for room in rooms %}
-            <a href="{% url 'reservation_day' room.room_slug date.year date.month date.day %}">
-                {{ room.room_slug }}
-            </a>
-            <br>
-        {% endfor %}
-    {% else %}
-        {% for room in rooms %}
-            <a href="{% url 'reservation_year' room.room_slug current_year %}">
-                {{ room.room_slug }}
-            </a>
-            <br>
-        {% endfor %}
-    {% endif %}
+    <section id="wyszukiwarka" style="background-image: url({% static 'images/image.jpg' %});">
+        <div class="wyszukiwarka container">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h1>Znajdź i zarezerwuj!</h1>
+                <div class="panel1">
+                    <input type="text" name="sign" placeholder="Numer sali">
+                    <input type="date" class="search_button" name="date" value="{{ values.date }}">
 
+                    <select name="time">
+                        <option value="">Godziny</option>
+                        {% for key, value in time_choices %}
+                            <option value="{{ key }}"
+                                {% if key == values.time %}
+                                    selected
+                                {% endif %}
+                            >{{ value }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select name="floor">
+                        <option></option>
+                        {% for floor_choice in floor_choices %}
+                            <option value="{{ floor_choice }}"
+                                {% if floor_level == floor_choice %}
+                                    selected
+                                {% endif %}
+                            >{{ floor_choice }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="panel2">
+                    <div class="dodatkowe">
+                        <div class="item">
+                            <h3>Rodzaj sali</h3>
+                            <select>
+                                <option></option>
+                                {% for key, value in destination_choices %}
+                                        <option value="{{ key }}"
+                                            {% if key == values.destination %}
+                                                selected
+                                            {% endif %}
+                                        >{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="item">
+                            <h3>Ilość miejsc</h3>
+                            <input type="number" name="places" value="{{ values.places }}" style="height: 35px; font-size: 16px; color: gray; font-family: 'Roboto'">
+                        </div>
+                        <div class="item">
+                            <h3>Ilość komputerów</h3>
+                            <input type="number" name="computers" value="{{ values.computers }}" style="height: 35px; font-size: 16px; color: gray; font-family: 'Roboto'">
+                        </div>
+                    </div>
+                    <h3>Dodatkowe mozliowści</h3>
+                    <div class="check_boxy">
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="blackboard" value="blackboard" id="blackboard"
+                                {% if values.blackboard %}
+                                    checked
+                                {% endif %}
+                            >
+                            <label for="blackboard">Tablica</label>
+                        </div>
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="projector" value="projector" id="projector"
+                                {% if values.projector %}
+                                    checked
+                                {% endif %}
+                            >
+                            <label for="projector">Projektor</label>
+                        </div>
+                        <div class="checkbox_item">
+                            <input type="checkbox" name="multimedia_board" value="multimedia_board" id="multimedia_board"
+                                {% if values.multimedia_board %}
+                                    checked
+                                {% endif %}
+                            >
+                            <label for="multimedia_board">Tablica multimedialna</label>
+                        </div>
+                    </div>
+                </div>
+                <h2>{{ error }}</h2>
+                <div class="przycisk">
+                    <input type="submit" value="Szukaj" class="button">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="wyniki_wysz">
+        <div class="wyniki_wysz container_2">
+            <div class="opis">
+                <h1>Wyniki wyszukiwania:</h1>
+                <h2>Wyniki wyszukiwania na podstawie preferencji uzytkownika</h2>
+            </div>
+            <div class="results">
+                {% if exact_date %}
+                    {% for room in rooms %}
+                <div class="item">
+                    <div class="img">
+                        <img src="icons/classroom.png">
+                    </div>
+                    <div class="opis_results">
+                        <h1>Sala {{ room.room_slug }}</h1>
+                        <h2>Piętro {{ room.level }}</h2>
+                        <h3>{{ room.destination }}</h3>
+                        <h4>{{ room.places }} miejsc</h4>
+                    </div>
+                    <div class="rezerwuj_button">
+                        <button>
+                            <a href="{% url 'reservation_day' room.room_slug date.year date.month date.day %}">Rezerwuj</a>
+                        </button>
+                    </div>
+                </div>
+                    {% endfor %}
+                {% else %}
+                    {% for room in rooms %}
+                <div class="item">
+                    <div class="img">
+                        <img src="{% static 'icons/classroom.png' %}">
+                    </div>
+                    <div class="opis_results">
+                        <h1>Sala {{ room.room_slug }}</h1>
+                        <h2>Piętro {{ room.floor.level }}</h2>
+                        <h3>
+                            {% for key, value in destination_choices %}
+                                {% if key == room.destination %}
+                                    {{ value }}
+                                {% endif %}
+                            {% endfor %}
+                        </h3>
+                        <h4>{{ room.number_of_places }} miejsc</h4>
+                    </div>
+                    <div class="rezerwuj_button">
+                        <button>
+                            <a href="{% url 'reservation_year' room.room_slug current_year %}">Rezerwuj</a>
+                        </button>
+                    </div>
+                </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer container">
+            <div class="firma">Rezerweo</div>
+            <div class="social-media">
+                <div class="social-ikona">
+                    <a href="www.facebook.com">
+                        <img src="{% static 'icons/facebook-like-5-48.png' %}" alt="Rezerweo Facebook">
+                    </a>
+                </div>
+
+                <div class="social-ikona">
+                    <a href="www.instagram.com">
+                        <img src="{% static 'icons/instagram-5-48.png' %}" alt="Rezerweo Instagram">
+                    </a>
+                </div>
+                <div class="social-ikona">
+                    <a href="www.twitter.com">
+                        <img src="{% static 'icons/twitter-5-48.png' %}" alt="Rezerweo Twitter">
+                    </a>
+                </div>
+            </div>
+            <p>2020 Rezerweo. Wszelkie prawa zastrzezone</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

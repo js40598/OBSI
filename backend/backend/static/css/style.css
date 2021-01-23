@@ -37,9 +37,9 @@ a {
 }
 
 #header .header {
-    min-height: 8vh;
+    min-height: 6vh;
     background-color: black;
-    opacity: .8;
+    opacity: .92;
 }
 
 #header .header .zielony {
@@ -51,7 +51,7 @@ a {
     font-weight: 600;
     color: white;
     padding-left: 10px;
-    opacity: .8;
+    opacity: .88;
 }
 
 #header .nawigacja {
@@ -182,7 +182,6 @@ span {
 /*Sekcja hero1*/
 
 #hero {
-    background-image: url(/images/image.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
@@ -236,10 +235,10 @@ span {
 
 /*Sekcja hero-2*/
 
-#hero_2 {
-    background-color: rgb(37, 37, 37);
-    position: relative;
 
+#hero_2 .hero{
+    display: flex;
+    flex-direction: row;
 }
 
 #hero_2 .opis {
@@ -256,7 +255,7 @@ span {
 
 #hero_2 .opis h1 {
     font-size: 4rem;
-    color: white;
+    color: rgb(37, 37, 37);;
     text-transform: uppercase;
     text-align: left;
     margin-bottom: 10px;
@@ -267,7 +266,7 @@ span {
     font-weight: 100;
     line-height: 2rem;
     text-align: left;
-    color: rgb(228, 227, 227);
+    color: rgb(37, 37, 37);;
     position: relative;
     margin-bottom: 80px;
     width: 90%;
@@ -275,11 +274,11 @@ span {
 
 
 #hero_2 .opis .hero_button{
-    border: 4px solid #59c496;
+    border: 4px solid rgb(37, 37, 37);
     padding: 10px 80px;
     font-size: 2rem;
     background-color: transparent;
-    color: #59c496;
+    color: rgb(37, 37, 37);;
     margin: 15px 0;
 }
 
@@ -295,11 +294,19 @@ span {
 #hero_2 .opis .hero_button:hover {
     background-color: #59c496;
     color: white;
+    border: 4px solid #59c496;
 }
 
 #hero_2 .opis .hero_button_2:hover {
     background-color: #358b66;
     color: white;
+}
+
+#hero_2 .zdjecie img{
+    width: 110%;
+    position: relative;
+    left: 80%;
+    padding-top: 180px;
 }
 
 /*Sekcja promo*/
@@ -323,12 +330,14 @@ span {
 #promo .promo .opis h1 {
     color: #307054;
     font-size: 3.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 #promo .promo .opis p {
     color: rgb(114, 114, 114);
     font-size: 1.4rem;
+    width: 70%;
+    margin:0 auto;
 }
 
 #promo .promo .boxy {
@@ -349,8 +358,7 @@ span {
 }
 
 #promo .boxy img {
-    width: 100px;
-    height: 100px;
+    width: 50px;
     margin-bottom: 10px;
 }
 
@@ -398,7 +406,7 @@ span {
     font-size: 4rem;
     margin-right: 30px;
     color: #59c496;
-    
+
 }
 
 #poradnik .poradnik .lewa p {
@@ -413,8 +421,8 @@ span {
 }
 
 #poradnik .poradnik .prawa img {
-    width: 85%;
-    height: 85%;
+    width: 70%;
+    margin-top: 200px;
 }
 
 /*Footer*/

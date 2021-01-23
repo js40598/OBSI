@@ -1,0 +1,527 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background-color: #dbdbdb;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#header {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: auto;
+}
+
+#header .header {
+    min-height: 6vh;
+    background-color: black;
+    opacity: .92;
+}
+
+#header .header .zielony {
+    color: #86C232;
+}
+
+#header .header .logo a {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    padding-left: 10px;
+    opacity: .88;
+}
+
+#header .nawigacja {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    padding: 0 10px;
+}
+
+#header .lista-nawigacji ul {
+    list-style: none;
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    left: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul.active {
+    left: 20%;
+}
+
+
+#header .lista-nawigacji ul a {
+    letter-spacing: .3rem;
+    text-decoration: none;
+    color: #9e9e9e;
+    text-transform: uppercase;
+    padding: 50px;
+    display: block;
+}
+
+#header .lista-nawigacji ul a:hover {
+    border-color: #59c496;
+    color: #59c496;
+    transition: ease-in .35s;
+}
+
+#header .lista-nawigacji ul a::after {
+    content: attr(opis-po);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: #181818;
+    font-size: 6rem;
+    letter-spacing: 5px;
+    z-index: -1;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul li:hover a::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/*Przycisk nawigacji mobilnej*/
+
+#header .hamburger {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    z-index: 100;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+
+#header .hamburger .bar {
+    height: 2px;
+    width: 20px;
+    position: relative;
+    background-color: white;
+    z-index: -1;
+}
+
+#header .hamburger .bar::after,
+#header .hamburger .bar::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: white;
+    transition: .4s ease;
+    transition-property: top, bottom;
+}
+
+#header .hamburger .bar::before {
+    bottom: 7px;
+}
+
+#header .hamburger .bar::after {
+    top: 7px;
+}
+
+#header .hamburger.active .bar::after {
+    top: 0;
+}
+
+#header .hamburger.active .bar::before {
+    bottom: 0;
+}
+
+span {
+    color: #59c496;
+    font-size: 4rem;
+}
+
+
+
+/*Sekcja hero1*/
+
+#hero {
+    background-image: url(images/image-2.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 10;
+
+}
+
+#hero .opis {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0px 20px;
+    position: absolute;
+    top: 25%;
+    left: 5%;
+}
+
+#hero .opis h1 {
+    font-size: 4rem;
+    color: white;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+#hero .opis p {
+    font-size: 1.5rem;
+    font-weight: 100;
+    line-height: 2rem;
+    text-align: left;
+    color: rgb(228, 227, 227);
+    position: relative;
+    margin-bottom: 80px;
+}
+
+#hero .opis input {
+    border: none;
+    padding: 10px 60px;
+    font-size: 2rem;
+    background-color: #59c496;
+    color: white;
+}
+
+#hero .opis input:hover {
+    background-color: transparent;
+    color: #59c496;
+    border: 3px solid #59c496;
+}
+
+/*Sekcja hero-2*/
+
+
+#hero_2 .hero{
+    display: flex;
+    flex-direction: row;
+}
+
+#hero_2 .opis {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0px 20px;
+    position: absolute;
+    top: 25%;
+    left: 5%;
+}
+
+#hero_2 .opis h1 {
+    font-size: 4rem;
+    color: rgb(37, 37, 37);;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+#hero_2 .opis p {
+    font-size: 1.5rem;
+    font-weight: 100;
+    line-height: 2rem;
+    text-align: left;
+    color: rgb(37, 37, 37);;
+    position: relative;
+    margin-bottom: 80px;
+    width: 90%;
+}
+
+
+#hero_2 .opis .hero_button{
+    border: 4px solid rgb(37, 37, 37);
+    padding: 10px 80px;
+    font-size: 2rem;
+    background-color: transparent;
+    color: rgb(37, 37, 37);;
+    margin: 15px 0;
+}
+
+#hero_2 .opis .hero_button_2{
+    border: none;
+    padding: 10px 60px;
+    font-size: 2rem;
+    background-color: #59c496;
+    color: white;
+    margin: 15px 0;
+}
+
+#hero_2 .opis .hero_button:hover {
+    background-color: #59c496;
+    color: white;
+    border: 4px solid #59c496;
+}
+
+#hero_2 .opis .hero_button_2:hover {
+    background-color: #358b66;
+    color: white;
+}
+
+#hero_2 .zdjecie img{
+    width: 110%;
+    position: relative;
+    left: 80%;
+    padding-top: 180px;
+}
+
+/*Sekcja promo*/
+
+#promo .promo {
+    flex-direction: column;
+    text-align: center;
+    max-width: 1500px;
+    margin: 0;
+    padding: 80px 0;
+}
+
+#promo .promo .opis {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 70px;
+}
+
+#promo .promo .opis h1 {
+    color: #307054;
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+}
+
+#promo .promo .opis p {
+    color: rgb(114, 114, 114);
+    font-size: 1.4rem;
+    width: 70%;
+    margin:0 auto;
+}
+
+#promo .promo .boxy {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 30px;
+    margin-bottom: 80px;
+
+}
+
+#promo .promo .boxy .item {
+    margin: 0 80px;
+    padding: 30px 40px;
+    background-color: #bbb9b9;
+}
+
+#promo .boxy img {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+#promo .promo .boxy .item h1 {
+    font-size: 2rem;
+    color: rgb(51, 51, 51);
+    margin-bottom: 15px;
+
+}
+
+#promo .boxy .item p {
+    text-align: justify;
+    color: rgb(80, 79, 79);
+}
+
+/*Sekcja poradnik*/
+
+#poradnik .poradnik {
+    flex-direction: row;
+    text-align: center;
+    max-width: 1500px;
+    margin: 0;
+    background-color: #181818;
+}
+
+#poradnik .poradnik .lewa {
+    width: 60%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 150px;
+    padding-left: 20px;
+}
+
+#poradnik .poradnik .lewa .element {
+    text-align: start;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    padding:20px 0;
+}
+
+
+#poradnik .poradnik .lewa h1 {
+    font-size: 4rem;
+    margin-right: 30px;
+    color: #59c496;
+    
+}
+
+#poradnik .poradnik .lewa p {
+    font-size: 1.8rem;
+    color: white;
+}
+
+#poradnik .poradnik .lewa h2 {
+    font-size: 2.7rem;
+    color: white;
+    padding-bottom: 10px;
+}
+
+#poradnik .poradnik .prawa img {
+    width: 70%;
+    margin-top: 200px;
+}
+
+/*Footer*/
+
+footer {
+    width: 100%;
+    background-color: black;
+    opacity: .93;
+
+}
+
+.footer {
+    min-height: 160px;
+    flex-direction: column;
+}
+
+.footer p {
+    color: white;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 0 20px;
+
+}
+
+.firma {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.social-media {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.social-ikona img {
+    height: 40px;
+    width: 40px;
+    margin: 0 10px;
+}
+
+
+
+/*Sekcja zakonczenie*/
+
+@media only screen and (min-width:992px) {
+
+    #header .hamburger {
+        display: none;
+    }
+
+    #header .lista-nawigacji {
+        height: 50px;
+    }
+
+    #header .lista-nawigacji ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content;
+        background-color: transparent;
+    }
+
+    #header .lista-nawigacji ul li {
+        display: inline-block;
+    }
+
+    #header .lista-nawigacji ul a {
+        font-size: .9rem;
+        font-weight: 500;
+        position: relative;
+        bottom: 31px;
+        left: 55px;
+    }
+
+    #header .lista-nawigacji ul a::after {
+        display: none;
+    }
+
+    #footer p {
+        font-size: 1.7rem;
+        padding-bottom: 15px;
+    }
+
+    #footer .firma {
+        font-size: 3.5rem;
+        margin: 20px 0;
+    }
+
+    #footer .social-media {
+        margin-bottom: 30px;
+    }
+
+    #footer .social-ikona img {
+        height: 60px;
+        width: 60px;
+        margin: 0 20px;
+    }
+}

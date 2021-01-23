@@ -1,40 +1,94 @@
 {% extends 'base.html' %}
 
+
+{% load static %}
+
+
+{% block title %}Zarezerwuj salę{% endblock %}
+
+
+{% block style %}{% static 'css/reservation.css' %}{% endblock %}
+
+
 {% block content %}
-
-            {% if paged_year.has_other_pages %}
-              {% for i in paginator_years %}
-                  {% if i == curr_year %}
-                      <a>{{ i }}</a>
-                  {% else %}
-                      <a href="{{ i }}">{{ i }}</a>
-                  {% endif %}
-              {% endfor %}
-            {% endif %}
-    <br>
-    <br>
-
-    
-    {% for month in calendar %}
-        <div style="width: 320px; display: inline-block; margin-right: 200px; margin-bottom: 40px">
-
-            {{ month.2 }}
-            <br>
-
-            {% for day in month.0 %}
-                {% if day.1 == month.1 %}
-                    <div style="width: 30px; display: inline-block; margin-right: 10px">
-                        <a href="{% url 'reservation_day' room_slug year month.1 day.2 %}">
-                            {{ day.2 }}
-                        </a>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
                     </div>
-                {% else %}
-                    <div style="width: 30px; display: inline-block; margin-right: 10px; color: lightgrey">
-                        {{ day.2 }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+                    <ul>
+                        <li>
+                            <a href="{% url 'search' %}" opis-po="Home" style="color: red;">Zarezerwuj</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'notifications' %}">Powiadomienia
+                            </a>
+                        </li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-    
+    </section>
+
+    <section id="first">
+        <div class="first container">
+            <div class="opis">
+                <div class="opis_1">
+                    <h1>Sala {{ current_room.sign }}</h1>
+                    <h2>Piętro {{ current_room.floor }}</h2>
+                </div>
+                <div class="opis_2">
+                    <h3><strong> Rodzaj sali:</strong> {{ current_room.destination }}</h3>
+                    <h3><strong> Ilość miejsc:</strong> {{ current_room.places }}</h3>
+                    <h3><strong> Ilość komputerów:</strong> {{ current_room.computers }}</h3><br></br>
+                </div>
+                <div class="opis_3">
+                    <h4><strong> Dodatkowe wyposażenie:</strong> <br>
+                        {% if current_room.projector %}
+                            Projektor
+                        {% endif %}</br>
+                        {% if current_room.multimedia_board %}
+                            Tablica multimedialna
+                        {% endif %}</br>
+                        {% if current_room.blackboard %}
+                            Tablica
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+            <form method="POST">
+                <div class="date-picker">
+                    <div class="selected-date">
+                        {% csrf_token %}
+                        <button type="submit" style="font-size: 24px; height: 60px; width: 320px; color: darkgreen;">Wybierz datę</button>
+                        <input style="height: 100%; width: 100%; text-align: center; font-size: 24px;"
+                               type="date" value="{{ current_year }}-{{ current_month }}-{{ current_day }}"
+                               required
+                               name="date_input"
+                        >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+    <script src="main.js"></script>
 {% endblock %}

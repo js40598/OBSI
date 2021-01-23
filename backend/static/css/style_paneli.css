@@ -37,6 +37,7 @@ a {
 #header .header {
     min-height: 6vh;
     background-color: black;
+    opacity: .92;
 }
 
 #header .header .zielony {
@@ -48,7 +49,7 @@ a {
     font-weight: 600;
     color: white;
     padding-left: 10px;
-    opacity: .8;
+    opacity: .88;
 }
 
 #header .nawigacja {
@@ -83,14 +84,18 @@ a {
 }
 
 #header .lista-nawigacji ul a {
-    font-size: 3rem;
-    font-weight: 600;
     letter-spacing: .3rem;
     text-decoration: none;
-    color: #b9b6b6;
+    color: #9e9e9e;
     text-transform: uppercase;
     padding: 50px;
     display: block;
+}
+
+#header .lista-nawigacji ul a:hover {
+    border-color: #59c496;
+    color: #59c496;
+    transition: ease-in .35s;
 }
 
 #header .lista-nawigacji ul a::after {
@@ -450,7 +455,7 @@ form .select_box label {
     }
 
     #header .lista-nawigacji {
-        height: 66px;
+        height: 50px;
     }
 
     #header .lista-nawigacji ul {
@@ -463,16 +468,14 @@ form .select_box label {
 
     #header .lista-nawigacji ul li {
         display: inline-block;
-
-
     }
 
     #header .lista-nawigacji ul a {
-        font-size: 1rem;
+        font-size: .9rem;
         font-weight: 500;
         position: relative;
-        bottom: 38px;
-        left: 50px;
+        bottom: 31px;
+        left: 55px;
     }
 
     #header .lista-nawigacji ul a::after {

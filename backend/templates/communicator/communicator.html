@@ -1,64 +1,123 @@
 {% extends 'base.html' %}
 
+
+{% load static %}
+
+
+{% block title %}Komunikator{% endblock %}
+
+
+{% block style %}{% static 'css/communicator.css' %}{% endblock %}
+
+
 {% block content %}
-    <div style="text-align: center">
-<textarea id="chat-log" cols="100" rows="20" style="text-align: center" disabled>{% for message in messages %}
-{{ message.1.content }} {{ message.1.user.username }} {{ message.0 }}{% endfor %}
-</textarea><br>
-        <input id="chat-message-input" type="text" size="133"><br><br>
-        <input id="chat-message-submit" type="button" value="Send">
-        {{ room_name|json_script:"room-name" }}
-        {{ request.user.username|json_script:"username" }}
-        <script>
-            const roomName = JSON.parse(document.getElementById('room-name').textContent);
-            const username = JSON.parse(document.getElementById('username').textContent);
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'search' %}" opis-po="Home">Zarezerwuj</a></li>
+                        <li><a href="{% url 'notifications' %}" opis-po="Sale">Powiadomienia</a></li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            const chatSocket = new WebSocket(
-                'ws://'
-                + window.location.host
-                + '/'
-                + roomName
-                + '/'
-            );
+    <section id="opis">
+        <div class="opis">
+            <h1>Skontaktuj się w celu rezerwacji sali</h1>
+            <p>Komunikuj się z osobami zainteresowanymi wybraną salą o interesującej Cię godzinie</p>
+            <img src="{% static 'icons/talking-chat-4-512.png' %}">
+        </div>
+    </section>
 
-            chatSocket.onmessage = function(e) {
-                const data = JSON.parse(e.data);
-                {#const monthNames = ["January", "February", "March", "April", "May", "June",#}
-                {#    "July", "August", "September", "October", "November", "December"];#}
-                let dateObj = new Date();
-                {#let month = monthNames[dateObj.getMonth()];#}
-                let month = dateObj.getMonth()+1;
-                let day = String(dateObj.getDate()).padStart(2, '0');
-                let year = dateObj.getFullYear();
-                let hours = dateObj.getHours();
-                var formattedHours = ("0" + hours).slice(-2);
-                let minutes = dateObj.getMinutes();
-                var formattedMinutes = ("0" + minutes).slice(-2);
-                let output = day + '/' + month  + '/' + year + ' ' + formattedHours + ':' + formattedMinutes;
-                document.querySelector('#chat-log').value += (data.message + ' ' + username + ' ' + output + '\n');
-            };
+    <section id="komunikator">
+        <div class="komunikator container">
+            <div class="box_komunikatora">
+                <div class="label">
+                    <img src="{% static 'icons/global.png' %}">
+                    <div class="kolumna">
+                        <h1>Sala {{ room_slug }}</h1>
 
-            chatSocket.onclose = function(e) {
-                console.error('Chat socket closed unexpectedly');
-            };
+                        <h2>Godzina {{ time }}</h2>
+                    </div>
+                </div>
+                    <textarea id="chat-log" readonly>{% for message in messages %}
+{{ message.1.content }} {{ message.1.user.username }} {{ message.0 }}{% endfor %}</textarea>
+                    <div class="wiadomosc">
+                        <input id="chat-message-input" placeholder="Napisz wiadomość...">
+                        <button id="chat-message-submit" type="submit" class="przycisk"><img src="{% static 'icons/send-mail.png' %}"></button>
+                        {{ room_name|json_script:"room-name" }}
+                        {{ request.user.username|json_script:"username" }}
+                        <script>
+                            const roomName = JSON.parse(document.getElementById('room-name').textContent);
+                            const username = JSON.parse(document.getElementById('username').textContent);
 
-            document.querySelector('#chat-message-input').focus();
-            document.querySelector('#chat-message-input').onkeyup = function(e) {
-                if (e.keyCode === 13) {  // enter, return
-                    document.querySelector('#chat-message-submit').click();
-                }
-            };
+                            const chatSocket = new WebSocket(
+                                'ws://'
+                                + window.location.host
+                                + '/'
+                                + roomName
+                                + '/'
+                            );
 
-            document.querySelector('#chat-message-submit').onclick = function(e) {
-                const messageInputDom = document.querySelector('#chat-message-input');
-                const message = messageInputDom.value;
-                chatSocket.send(JSON.stringify({
-                    'message': message,
-                    'room_name': roomName,
-                    'username': username,
-                }));
-                messageInputDom.value = '';
-            };
-        </script>
-    </div>
+                            chatSocket.onmessage = function(e) {
+                                const data = JSON.parse(e.data);
+                                {#const monthNames = ["January", "February", "March", "April", "May", "June",#}
+                                {#    "July", "August", "September", "October", "November", "December"];#}
+                                let dateObj = new Date();
+                                {#let month = monthNames[dateObj.getMonth()];#}
+                                let month = dateObj.getMonth()+1;
+                                let day = String(dateObj.getDate()).padStart(2, '0');
+                                let year = dateObj.getFullYear();
+                                let hours = dateObj.getHours();
+                                var formattedHours = ("0" + hours).slice(-2);
+                                let minutes = dateObj.getMinutes();
+                                var formattedMinutes = ("0" + minutes).slice(-2);
+                                let output = day + '/' + month  + '/' + year + ' ' + formattedHours + ':' + formattedMinutes;
+                                document.querySelector('#chat-log').value += (data.message + ' ' + username + ' ' + output + '\n');
+                            };
+
+                            chatSocket.onclose = function(e) {
+                                console.error('Chat socket closed unexpectedly');
+                            };
+
+                            document.querySelector('#chat-message-input').focus();
+                            document.querySelector('#chat-message-input').onkeyup = function(e) {
+                                if (e.keyCode === 13) {  // enter, return
+                                    document.querySelector('#chat-message-submit').click();
+                                }
+                            };
+
+                            document.querySelector('#chat-message-submit').onclick = function(e) {
+                                const messageInputDom = document.querySelector('#chat-message-input');
+                                const message = messageInputDom.value;
+                                chatSocket.send(JSON.stringify({
+                                    'message': message,
+                                    'room_name': roomName,
+                                    'username': username,
+                                }));
+                                messageInputDom.value = '';
+                            };
+                        </script>
+
+                    </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

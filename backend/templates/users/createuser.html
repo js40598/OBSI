@@ -7,7 +7,7 @@
 {% block title %}Panel rejestracji{% endblock %}
 
 
-{% block style %}{% static 'css/panels.css' %}{% endblock %}
+{% block style %}{% static 'css/style_paneli.css' %}{% endblock %}
 
 
 {% block content %}
@@ -16,6 +16,19 @@
             <div class="nawigacja">
                 <div class="logo">
                     <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li><a href="{% url 'search' %}" opis-po="Home">Zarezerwuj</a></li>
+                        <li><a href="{% url 'notifications' %}" opis-po="Sale">Powiadomienia</a></li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout" style="color: red">Dodaj użytkownika</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

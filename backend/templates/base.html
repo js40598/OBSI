@@ -10,7 +10,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% block style %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block script %}
+    {% endblock %}
+    <meta http-equiv="refresh" content="60">
 </head>
+
 
 <body>
 {% include 'partials/_topbar.html' %}

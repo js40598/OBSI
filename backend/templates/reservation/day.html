@@ -1,132 +1,200 @@
-{% include 'base.html' %}
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block title %}Zarezerwuj salę{% endblock %}
+
+
+{% block style %}{% static 'css/reservation.css' %}{% endblock %}
+
+
 {% block content %}
-    <table>
-        <tr>
-            <th>
-                Block
-            </th>
-            <th>
-                Time
-            </th>
-            <th>
-                Reserved by
-            </th>
-            <th>
-            </th>
-        </tr>
-        {% for reservation in reservations %}
-            <tr>
-                {% if reservation.0 %}
-                    <td>
-                        {{ reservation.2.0 }}
-                    </td>
-                    <td>
-                        {{ reservation.2.1 }}
-                    </td>
-                    <td>
-                        {{ reservation.1.user.username }}
-                    </td>
-                    <td>
-                        <a href="{% url 'communicator' room_slug reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 reservation.1.reservation_slug %}">Communicator</a>
-{#                        <a href="{% url 'communicator' reservation.1.reservation_slug %}">Communicator</a>#}
-                    </td>
-                    <td>
-                        {% if reservation.1.user == request.user and reservation.1.is_upcoming %}
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="time" value="{{ reservation.2.0 }}">
-                            <input type="hidden" name="user" value="{{ request.user }}">
-                            <input type="hidden" name="remove_reservation" value="{{ reservation.1.0 }}">
-                            <button type="submit">Remove reservation</button>
-                        </form>
-                        {% else %}
-                            <button disabled>Remove reservation</button>
+    <section id="header">
+        <div class="header container">
+            <div class="nawigacja">
+                <div class="logo">
+                    <a href="{% url 'home' %}">Rezerweo</a>
+                </div>
+                <div class="lista-nawigacji">
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="{% url 'search' %}" opis-po="Home" style="color: red;">Zarezerwuj</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'notifications' %}">Powiadomienia
+                            </a>
+                        </li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
                         {% endif %}
-                    </td>
-                    <td>
-                        {% if reservation.3 == 'Student' %}
-                            {% if user_group != 'Student' %}
-                                {% if reservation.1.is_upcoming %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
-                                    <input type="hidden" name="time" value="{{ reservation.2.0 }}">
-                                    <button type="submit">Force reservation</button>
-                                </form>
-                                {% else %}
-                                    <button type="submit" disabled>Force reservation</button>
-                                {% endif %}
-                            {% endif %}
-                        {% elif reservation.3 == 'Lecturer' %}
-                            {% if user_group in 'Staff Local Admin' %}
-                                {% if reservation.1.is_upcoming %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
-                                    <input type="hidden" name="time" value="{{ reservation.2.0 }}">
-                                    <button type="submit">Force reservation</button>
-                                </form>
-                                {% else %}
-                                    <button type="submit" disabled>Force reservation</button>
-                                {% endif %}
-                            {% endif %}
-                        {% elif reservation.3 == 'Staff' %}
-                            {% if user_group in 'Local Admin' %}
-                                {% if reservation.1.is_upcoming %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
-                                    <input type="hidden" name="time" value="{{ reservation.2.0 }}">
-                                    <button type="submit">Force reservation</button>
-                                </form>
-                                {% else %}
-                                    <button type="submit" disabled>Force reservation</button>
-                                {% endif %}
-                            {% endif %}
-                        {% elif reservation.3 == 'Local Admin' %}
-                            {% if user_group in 'Admin' %}
-                                {% if reservation.1.is_upcoming %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
-                                    <input type="hidden" name="time" value="{{ reservation.2.0 }}">
-                                    <button type="submit">Force reservation</button>
-                                </form>
-                                {% else %}
-                                    <button type="submit" disabled>Force reservation</button>
-                                {% endif %}
-                            {% endif %}
-                        {% else %}
-                            <button disabled>Force reservation</button>
-                        {% endif %}
-                    </td>
-                {% else %}
-                    <td>
-                        {{ reservation.1.0 }}
-                    </td>
-                    <td>
-                        {{ reservation.1.1 }}
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        {% if reservation.2 %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="create_reservation">
-                                <input type="hidden" name="time" value="{{ reservation.1.0 }}">
-                                <button type="submit">Reserve</button>
-                            </form>
-                        {% else %}
-                            <button type="submit" disabled>Reserve</button>
-                        {% endif %}
-                    </td>
-                {% endif %}
-            </tr>
-
-        {% endfor %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-    </table>
-    
+    <section id="second">
+        <div class="second container">
+            <table>
+                <tr>
+                    <th>Blok</th>
+                    <th>Godzina</th>
+                    <th>Zerezerował/a</th>
+                    <th class="komunikator">Komunikator</th>
+                    <th class="zarzadzaj">Zarządzaj</th>
+                </tr>
+                {% for reservation in reservations %}
+                    <tr>
+                        {% if reservation.0 %}
+                            <td>{{ reservation.2.0 }}</td>
+                            <td>{{ reservation.2.1 }}</td>
+                            <td>{{ reservation.1.user.username }}</td>
+                            <td class="komunikator">
+                                <a href="{% url 'communicator' room_slug reservation.1.year_slug reservation.1.month_slug reservation.1.day_slug reservation.1.time.0 reservation.1.reservation_slug %}">
+                                    <img src="{% static 'icons/messenger.png' %}">
+                                </a>
+                            </td>
+                            <td>
+                                <table class="innertable" style="box-shadow: none;">
+                                    {% if reservation.1.user == request.user and reservation.1.is_upcoming %}
+                                        <td class="insidetd">
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                                                <input type="hidden" name="user" value="{{ request.user }}">
+                                                <input type="hidden" name="remove_reservation" value="{{ reservation.1.0 }}">
+                                                <button type="submit" class="zarezerwuj">Usuń rezerwację</button>
+                                            </form>
+                                        <td/>
+                                        {% else %}
+                                            <td class="insidetd">
+                                                <button disabled>Usuń rezerwację</button>
+                                            <td/>
+                                        {% endif %}
+                                        </td>
+                                        <td class="insidetd">
+                                            {% if reservation.3 == 'Student' %}
+                                        {% if user_group != 'Student' %}
+                                            {% if reservation.1.is_upcoming %}
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
+                                                <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                                                <button type="submit" class="zarezerwuj">Wymuś rezerwację</button>
+                                            </form>
+                                            {% else %}
+                                                <button type="submit" disabled>Wymuś rezerwację</button>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% elif reservation.3 == 'Lecturer' %}
+                                        {% if user_group in 'Staff Local Admin' %}
+                                            {% if reservation.1.is_upcoming %}
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
+                                                <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                                                <button type="submit" class="zarezerwuj">Wymuś rezerwację</button>
+                                            </form>
+                                            {% else %}
+                                                <button type="submit" disabled>Wymuś rezerwację</button>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% elif reservation.3 == 'Staff' %}
+                                        {% if user_group in 'Local Admin' %}
+                                            {% if reservation.1.is_upcoming %}
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
+                                                <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                                                <button type="submit" class="zarezerwuj">Wymuś rezerwację</button>
+                                            </form>
+                                            {% else %}
+                                                <button type="submit" disabled>Wymuś rezerwację</button>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% elif reservation.3 == 'Local Admin' %}
+                                        {% if user_group in 'Admin' %}
+                                            {% if reservation.1.is_upcoming %}
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="force_reservation" value="{{ reservation.1 }}">
+                                                <input type="hidden" name="time" value="{{ reservation.2.0 }}">
+                                                <button type="submit" class="zarezerwuj">Wymuś rezerwację</button>
+                                            </form>
+                                            {% else %}
+                                                <button type="submit" disabled>Wymuś rezerwację</button>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        <button disabled>Wymuś rezerwację</button>
+                                    {% endif %}</td>
+                                    </td>
+                                </table>
+                            </td>
+                        {% else %}
+                            <td>{{ reservation.1.0 }}</td>
+                            <td>{{ reservation.1.1 }}</td>
+                            <td></td>
+                            <td class="komunikator"></td>
+                            <td>
+                            {% if reservation.2 %}
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="create_reservation">
+                                    <input type="hidden" name="time" value="{{ reservation.1.0 }}">
+                                    <button type="submit" class="zarezerwuj">Zarezerwuj</button>
+                                </form>
+                            {% else %}
+                                <button type="submit" disabled>Zarezerwuj</button>
+                            {% endif %}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer container">
+            <div class="firma">Rezerweo</div>
+            <div class="social-media">
+                <div class="social-ikona">
+                    <a href="www.facebook.com">
+                        <img src="{% static 'icons/facebook-like-5-48.png' %}" alt="Rezerweo Facebook">
+                    </a>
+                </div>
+
+                <div class="social-ikona">
+                    <a href="www.instagram.com">
+                        <img src="{% static 'icons/instagram-5-48.png' %}" alt="Rezerweo Instagram">
+                    </a>
+                </div>
+                <div class="social-ikona">
+                    <a href="www.twitter.com">
+                        <img src="{% static 'icons/twitter-5-48.png' %}" alt="Rezerweo Twitter">
+                    </a>
+                </div>
+            </div>
+            <p>2020 Rezerweo. Wszelkie prawa zastrzezone</p>
+        </div>
+    </footer>
+
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+    <script src="main.js"></script>
 {% endblock %}

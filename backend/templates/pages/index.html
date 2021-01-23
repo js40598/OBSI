@@ -11,7 +11,7 @@
 
 
 {% block content %}
-        <section id="header">
+    <section id="header">
         <div class="header container">
             <div class="nawigacja">
                 <div class="logo">
@@ -22,9 +22,12 @@
                         <div class="bar"></div>
                     </div>
                     <ul>
-                        <li><a href="#" opis-po="Sale">Pomoc</a></li>
-                        <li><a href="{% url 'search' %}" opis-po="Home">Rezerwuj</a></li>
-                        <li><a href="{% url 'notifications' %}" opis-po="Notifications">Powiadomienia</a></li>
+                        <li><a href="{% url 'search' %}" opis-po="Home">Zarezerwuj</a></li>
+                        <li><a href="{% url 'notifications' %}" opis-po="Sale">Powiadomienia</a></li>
+                        {% if request.user.groups.all.0.name not in 'Student Lecturer' %}
+                            <li><a href="{% url 'createuser' %}" opis-po="Logout">Dodaj użytkownika</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'landing' %}" opis-po="Logout">Wyloguj</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,6 +41,9 @@
                 <p>Odkryj mozliwości serwisu Rezerweo i korzystaj rezerwując sale na wydziale Informatyki ZUT.</p>
                 <a href="{% url 'home' %}#poradnik"><input type="button" value="Dowiedz się więcej" class="hero_button"></a>
                 <a href="{% url 'search' %}"><input type="button" value="Zarezerwuj" class="hero_button_2"></a>
+            </div>
+            <div class="zdjecie">
+                <img src="{% static 'images/happy_woman_in_front_of_computer_by_mrphilips_d5ncb4t-fullview-removebg-preview.png' %}">
             </div>
         </div>
     </section>

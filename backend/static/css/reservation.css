@@ -1,0 +1,625 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body {
+    width: 100%;
+    background-color: #d3d3d3;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+h4{
+    font-size: 1.6rem;
+    font-weight: 400;
+    padding-left: 40px;
+}
+
+
+#header ul .powiadomienia {
+    color: red;
+
+}
+
+.container {
+    min-height: 80vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Sekcja header*/
+
+#header {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: auto;
+}
+
+#header .header {
+    min-height: 6vh;
+    background-color: black;
+    opacity: .92;
+}
+
+#header .header .zielony {
+    color: #86C232;
+}
+
+#header .header .logo a {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+    padding-left: 10px;
+    opacity: .88;
+}
+
+#header .nawigacja {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    padding: 0 10px;
+}
+
+#header .lista-nawigacji ul {
+    list-style: none;
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    left: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul.active {
+    left: 20%;
+}
+
+
+#header .lista-nawigacji ul a {
+    letter-spacing: .3rem;
+    text-decoration: none;
+    color: #9e9e9e;
+    text-transform: uppercase;
+    padding: 50px;
+    display: block;
+}
+
+
+#header .lista-nawigacji ul a span {
+    color: red;
+}
+
+#header .lista-nawigacji ul a:hover {
+    border-color: #59c496;
+    color: #59c496;
+    transition: ease-in .35s;
+}
+
+
+#header .lista-nawigacji ul a::after {
+    content: attr(opis-po);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: #181818;
+    font-size: 6rem;
+    letter-spacing: 5px;
+    z-index: -1;
+    transition: .5s ease;
+}
+
+#header .lista-nawigacji ul li:hover a::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/*Przycisk nawigacji mobilnej*/
+
+#header .hamburger {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    z-index: 100;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+
+#header .hamburger .bar {
+    height: 2px;
+    width: 20px;
+    position: relative;
+    background-color: white;
+    z-index: -1;
+}
+
+#header .hamburger .bar::after,
+#header .hamburger .bar::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: white;
+    transition: .4s ease;
+    transition-property: top, bottom;
+}
+
+#header .hamburger .bar::before {
+    bottom: 7px;
+}
+
+#header .hamburger .bar::after {
+    top: 7px;
+}
+
+#header .hamburger.active .bar::after {
+    top: 0;
+}
+
+#header .hamburger.active .bar::before {
+    bottom: 0;
+}
+
+/*first*/
+
+
+
+#first .first {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    background-color: #eeeeee;
+    width: 90%;
+    position: relative;
+    top: 100px;
+    box-shadow: 0 0 10px rgba(3, 3, 3, 0.397);
+}
+
+#first .first .opis {
+    width: 50%;
+    float: left;
+    height: 600px;
+    padding-left: 40px;
+    position: relative;
+    top: 10px;
+
+}
+
+#first .opis .opis_1 {
+    margin-top: 40px;
+    margin-bottom: 80px;
+    border-bottom: 2px #59c496 solid;
+    padding-bottom: 20px;
+    width: 80%;
+
+
+}
+
+#first .opis .opis_1 h1 {
+    font-size: 3rem;
+    font-weight: 400;
+}
+
+#first .opis .opis_1 h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2.2rem;
+    padding-left: 2px;
+}
+
+#first .opis .opis_2 h3 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+}
+
+#first .opis .opis_3 h4 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+    margin-top: 20px;
+}
+
+#first .calendar {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#first .calendar img {
+    width: 70%;
+}
+
+
+/*second*/
+
+#second .second {
+    margin-top: 60px;
+    background-color: #d3d3d3;
+
+}
+
+#second table {
+    width: 90%;
+    background-color: #eeeeee;
+    box-shadow: 0 0 10px rgba(3, 3, 3, 0.397);
+}
+
+
+
+
+#second table th {
+    width: 10%;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid black;
+    border-left: none;
+    border-right: none;
+}
+
+#second table td {
+    text-align: center;
+    padding-top: 10px;
+}
+
+
+
+#second table .komunikator img {
+    width: 15%;
+}
+
+#second table th .zarzadzaj {
+    width: 30%;
+}
+
+
+#second table .zarezerwuj {
+    margin-right: 10px;
+    font-size: 1rem;
+    padding: 8px;
+    border: #59c496;
+    background-color: #59c496;
+    color: #eeeeee;
+}
+
+#second table button {
+    margin-right: 10px;
+    font-size: 1rem;
+    padding: 8px;
+    border: #59c496;
+    background-color: #eeeeee;
+    color: #59c496;
+
+}
+
+
+#second table .przyciski {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/*Komunikator*/
+
+.chat {
+    display:none ;
+}
+
+.chat .close-button {
+    margin-left: 140px;
+    margin-top: 11px;
+    background: transparent;
+    border: none;
+    
+}
+
+
+
+.chat .box_komunikatora {
+    width: 400px;
+    height: 450px;
+    position: absolute;
+    top: 100%;
+    left: 70%;
+    border-radius: 30px;
+    box-shadow: 0px 0px 40px #202020;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to top right, rgb(56, 85, 250), rgb(2, 186, 199));
+}
+
+.chat .box_komunikatora .label {
+    width: 100%;
+    background-image: linear-gradient(to bottom right, rgb(56, 85, 250), rgb(2, 186, 199));
+    border: none;
+    border-radius: 30px 30px 0 0;
+    height: 70px;
+    padding-left: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.chat .box_komunikatora .label h1 {
+    padding-left: 15px;
+    color: white;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding-top: 3px;
+}
+
+.chat .box_komunikatora .label h2 {
+    padding-left: 15px;
+    color: rgb(196, 193, 193);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.chat .box_komunikatora .label img {
+    width: 45px;
+    height: 45px;
+}
+
+.chat .box_komunikatora textarea {
+    width: 100%;
+    height: 290px;
+    background-color: whitesmoke;
+}
+
+
+.chat .box_komunikatora input {
+    width: 75%;
+    height: 55px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1.1rem;
+    padding: 25px 0px 25px 20px;
+    position: relative;
+    left: 20px;
+}
+
+
+.chat .box_komunikatora .wiadomosc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    top: 12px;
+
+}
+
+
+.chat .box_komunikatora .wiadomosc button {
+    position: relative;
+    left: 35px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
+}
+
+.chat .box_komunikatora .wiadomosc button img {
+    width: 35px;
+    filter: brightness(0.9);
+}
+
+.chat .box_komunikatora .wiadomosc button img:hover {
+    filter: brightness(1);
+}
+
+/*Kalendarz*/
+
+.date-picker {
+	position: relative;
+	width: 100%;
+	max-width: 320px;
+	height: 60px;
+	background-color: #FFF;
+	margin: 30px auto;
+	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+
+	cursor: pointer;
+	user-select: none;
+}
+
+.date-picker:hover {
+	background-color: #F3F3F3;
+}
+
+.date-picker .selected-date {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: #313131;
+	font-size: 28px;
+}
+
+.date-picker .dates {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+
+	background-color: #FFF;
+}
+
+.date-picker .dates.active {
+	display: block;
+}
+
+.date-picker .dates .month {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 2px solid #EEE;
+}
+
+.date-picker .dates .month .arrows {
+	width: 35px;
+	height: 35px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #313131;
+	font-size: 20px;
+}
+
+.date-picker .dates .month .arrows:hover {
+	background-color: #F3F3F3;
+}
+
+.date-picker .dates .month .arrows:active {
+	background-color: #00CA85;
+}
+
+.date-picker .dates .days {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	height: 200px;
+}
+.date-picker .dates .days .day { 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #313131;
+}
+.date-picker .dates .days .day.selected {
+	background-color: #00CA85;
+}
+
+/*Footer*/
+
+footer {
+    width: 100%;
+    background-color: black;
+    opacity: .93;
+
+}
+
+.footer {
+    min-height: 160px;
+    flex-direction: column;
+}
+
+.footer p {
+    color: white;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 0 20px;
+
+}
+
+.firma {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.social-media {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.social-ikona img {
+    height: 40px;
+    width: 40px;
+    margin: 0 10px;
+}
+
+
+
+@media only screen and (min-width:992px) {
+
+    #header .hamburger {
+        display: none;
+    }
+
+    #header .lista-nawigacji {
+        height: 50px;
+    }
+
+    #header .lista-nawigacji ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content;
+        background-color: transparent;
+    }
+
+    #header .lista-nawigacji ul li {
+        display: inline-block;
+    }
+
+    #header .lista-nawigacji ul a {
+        font-size: .9rem;
+        font-weight: 500;
+        position: relative;
+        bottom: 31px;
+        left: 55px;
+    }
+
+    #header .lista-nawigacji ul a::after {
+        display: none;
+    }
+
+    #footer p {
+        font-size: 1.7rem;
+        padding-bottom: 15px;
+    }
+
+    #footer .firma {
+        font-size: 3.5rem;
+        margin: 20px 0;
+    }
+
+    #footer .social-media {
+        margin-bottom: 30px;
+    }
+
+    #footer .social-ikona img {
+        height: 60px;
+        width: 60px;
+        margin: 0 20px;
+    }
+}

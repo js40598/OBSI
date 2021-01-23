@@ -1,17 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<meta lang="pl-PL">
 
-<head>
-    <title>Panel logowania</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'css/panels.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+{% block title %}
+    Panel logowania
+{% endblock %}
 
-<body>
+
+{% block style %}{% static 'css/style_paneli.css' %}{% endblock %}
+
+
+{% block content %}
     <section id="header">
         <div class="header container">
             <div class="nawigacja">
@@ -56,6 +55,4 @@
 
     <footer></footer>
     <script src="{% static 'js/app.js' %}"></script>
-</body>
-
-</html>
+{% endblock %}

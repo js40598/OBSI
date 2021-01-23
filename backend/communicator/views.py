@@ -16,6 +16,8 @@ def communicator(request, room_slug, year, month, day, time, room_name):
     messages = [[datetime.strftime(message.datetime + timedelta(hours=1), '%d/%m/%Y %H:%M'), message]
                 for message in Message.objects.filter(reservation=reservation)]
     context = {
+        'room_sign': room_slug,
+        'time': '{}:00-{}:00'.format(time * 2 + 6, time * 2 + 8),
         'messages': messages,
         # 'communicator_instance_path': f'{room_slug}/{year}/{month}/{day}/{time}',
         # 'room_name': reservation.reservation_slug,
