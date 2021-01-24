@@ -1,4 +1,7 @@
 hosting_files
+docker*
+Twisted*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
